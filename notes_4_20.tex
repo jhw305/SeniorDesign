@@ -1,23 +1,27 @@
 Testbench with benchmark C programs
 CPU
 
+Starting point - single cycle processor
 - ALU
-	- number of ALUs
+	- we have a rather large instruction set as the starting point, the user selectively turns off instructions, with some like branching that are required. (basic arithmetic) - (Instruction set - RISC-V 32-bit basic instruction set)
+
+	/* Not relevant for now */
+	- number of ALUs (not relevant if risc-v)
 		- so the user can specify their own FPU or ALU or something
 		- just cascade two argument ALUs
 		- one argument ALU?
 	- operations
 		- user might want to be able to specify their own opcodes. But for now, just have the tool generate opcodes based on something naive like the order of the operations listed.
 	- number of arguments to ALU
+	/* Not relevant for now */
 
 - Program Counter
 
 - Memory
-	- Hardware that actually accesses main memory
-	- Should have the ability to switch between harvard or princeton architecture (n-way memories)
-		- at what point in the hierarchy would you be able to tell the difference between i-cache and d-cache?
-		- if we really care, restrict n to 1 or 2. (requirement: n >= 1)
-	- Caching?
-	- Should have the ability to have on-chip memory (i and d memory)
+	- Different modules can be instantiated. Two choices - either cache or on-chip memory. Can determine levels of caching and which caches take place in what level of the hierarchy.
 
 - Caching optional
+
+1) Single-Cycle
+2) Pipelined
+3) Forwarding
