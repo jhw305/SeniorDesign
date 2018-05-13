@@ -1,0 +1,71 @@
+\documentclass{article}
+\begin{document}
+We propose a system for determining the location of various IoT devices and being able to remotely access them.
+
+\subsection{Stage 0}
+Early Deadline: End of this next week \\
+Expected Deadline: End of the quarter \\
+Late Deadline: First weekend of summer break \\
+\begin{itemize}
+\item Develop an algorithm to determine the position of IoT devices given distance from various reference nodes. This should include robust error handling
+\item Determine the physical mechanism that ascertains the device's distance from these reference nodes (i.e. communication protocol and hardware used)
+\item Determine the method by which the user can access the IoT devices, specifically how the user locates the device IoT device
+\item Determine the specification of the central hub hardware that contains the reference nodes if one needs to exist
+\end{itemize}
+
+\subsection{Stage 1}
+Early Deadline: Week 0 of Fall 2018 quarter \\
+Expected Deadline: Before fall design review \\
+Late Deadline: End of winter break \\
+\begin{itemize}
+\item Write the program that determines IoT device position using algorithm determined in Stage 0. The input to the program at this stage is simply generated test data
+\item Using the hardware and protocol determined in Stage 0, write program (and configure hardware) to acquire the device's distance from a reference node. Data should be verified against hand measurements.
+\item Design and assemble the central hub hardware if one needs to exist
+\item Design a test UI to interact with a basic IoT device
+\end{itemize}
+
+% Testing with basic IoT device
+\subsection{Stage 2}
+Early Deadline: Before fall design review \\
+Expected Deadline: End of winter break \\
+Late Deadline: Before winter design review \\
+\begin{itemize}
+\item Determine a trivially simple IoT device to use for the test
+\item Integrate the components developed in Stage 1 into one system
+\item Test using the UI to turn on/off the IoT device selected. If central hub is used, the test should pass even in the presence of obstacles between the device and the hub.
+\end{itemize}
+
+% Developing a more scalable system
+\subsection{Stage 3}
+Early Deadline: End of fall quarter \\
+Expected Deadline: End of winter break \\
+Late Deadline: Before winter design review \\
+\begin{itemize}
+\item Determine the interface a hardware vendor must provide to the system to utilize the device's functionality
+\item Determine how a UI is to be generated from information on IoT device
+\item Ensure that the existing protocol supports an arbitrary number of IoT devices. Tweak algorithms if necessary
+\end{itemize}
+
+% Designing the more scalable system
+\subsection{Stage 4}
+Early Deadline: End of winter break \\
+Expected Deadline: Before winter design review \\
+Late Deadline: N/A \\
+\begin{itemize}
+\item Write the UI generator. The input is simply descriptions of fictitious IoT devices.
+\item Develop the current system so that IoT device information and capabilities are sent to the user
+\item Test the current on-off system on multiple trivially simple devices
+\end{itemize}
+
+% Testing the more scalable system
+\subsection{Stage 5}
+Early Deadline: Before winter design review \\
+Expected Deadline: N/A \\
+Late Deadline: N/A \\
+\begin{itemize}
+\item Develop a few simple IoT setups with limited functionality. Write the hardware specification for these. (i.e. three LEDs and a choice to turn on one of them)
+\item Integrate the system with the UI generator.
+\item Test the setup
+\end{itemize}
+
+\end{document}
