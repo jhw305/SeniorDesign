@@ -1,15 +1,28 @@
 \documentclass{article}
 \begin{document}
+\begin{center}
+{\Large VIPS: Vector-Generating Indoor Positioning System} \\
+{\small Jesse Campbell, Roman Parise, Jason Wang, Tanner Emerson, Chandler Ditolla}
+\end{center}
+\section{Project Description}
+In the pre-IoT world, two steps are required to access a device: 1) the location must be determined, and 2) the user must physically interact with the device.
+The menu of the IoT device's mobile application eliminates 2).
+However, with a sufficient number of IoT devices in a smart home, 1) becomes more complicated in that users are beginning to have to navigate through an ever-increasing number of menus in mobile applications in order to interface with more and more devices.
+It would be easier if simply determining the location of a device could allow the user to use the device. \\
+
 We propose a system for determining the location of various IoT devices and being able to remotely access them.
-Essentially our project has 3 main parts:
+The project has $3$ main parts: \\
 
-1. To create an indoor positioning system using the Return Time of Flight localization technique in order to create a 3D map of relevant devices via an anchored, central hub.
-2. To create a ‘remote’ who’s position and orientation is tracked by sensors in (1) that the central hub will use to generate a vector extending forward in simulated space to whatever IoT device is being pointed at, and send a signal to turn on (and later more complexly interface with) that IoT device.
-3. To create a phone app and phone case that will serve as both the ‘wand’ and a very intuitive and fast interfacing device for smart homes or industry applications.
+\begin{enumerate}
+\item To create an indoor positioning system using the Return Time of Flight localization technique in order to create a 3D map of relevant devices via an anchored, central hub. The central hub defines a common origin to which various IoT devices can be referenced and communicates to the IoT devices whether they should turn on, off, or perform more complex functionality. \\
+\item To create a module attached to a mobile phone. This module's position and orientation are tracked by sensors in (1). The central hub will use the module's position and orientation to generate a vector extending forward in simulated space to the IoT device at which the user is pointing. \\
+\item To create a mobile application that is used to interface with the selected device via the central hub. \\
+\end{enumerate}
 
-Currently in smart homes, users must fumble through an ever increasing number of menus in order to interface with more and more devices. By taking the user’s orientation into account, we can quickly determine exactly which device a local user is attempting to interact with, and immediately generate the appropriate interface, making interfacing with these devices a much more smooth process.”
+By taking the user’s orientation into account, we can quickly determine exactly which device a local user is attempting to use and generate the appropriate interface in the mobile application.
 
-
+\section{Implementation Plan}
+Below is a proposed plan for the project's implementation.
 \subsection{Stage 0}
 Early Deadline: End of this next week \\
 Expected Deadline: End of the quarter \\
