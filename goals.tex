@@ -5,21 +5,18 @@
 {\small Jesse Campbell, Roman Parise, Jason Wang, Tanner Emerson, Chandler Ditolla}
 \end{center}
 \section{Project Description}
-In the pre-IoT world, two steps are required to access a device: 1) the location must be determined, and 2) the user must physically interact with the device.
-The menu of the IoT device's mobile application eliminates 2).
-However, with a sufficient number of IoT devices in a smart home, 1) becomes more complicated in that users are beginning to have to navigate through an ever-increasing number of menus in mobile applications in order to interface with more and more devices.
-It would be easier if simply determining the location of a device could allow the user to use the device. \\
-
-We propose a system for determining the location of various IoT devices and being able to remotely access them.
-The project has $3$ main parts: \\
-
-\begin{enumerate}
-\item To create an indoor positioning system using the Return Time of Flight localization technique in order to create a 3D map of relevant devices via an anchored, central hub. The central hub defines a common origin to which various IoT devices can be referenced and communicates to the IoT devices whether they should turn on, off, or perform more complex functionality. \\
-\item To create a module attached to a mobile phone. This module's position and orientation are tracked by sensors in (1). The central hub will use the module's position and orientation to generate a vector extending forward in simulated space to the IoT device at which the user is pointing. \\
-\item To create a mobile application that is used to interface with the selected device via the central hub. \\
-\end{enumerate}
-
-By taking the user’s orientation into account, we can quickly determine exactly which device a local user is attempting to use and generate the appropriate interface in the mobile application.
+We propose a system for detecting and keeping track of a large number of objects in three-dimensions.
+This system consists of the following components:
+\begin{itemize}
+\item A large number of small, inexpensive modules that can be attached to the objects
+\item A central hub that keeps track of the 3D coordinates of the modules with respect to itself
+\item A software interface that allows a user to acquire the 3D coordinates of the modules
+\end{itemize}
+The modules are to be designed so that they are easy to mass produce to ensure that the system is scalable.
+The user attaches the module to an object of interest.
+The module is software programmable so that the user can "label" the given object.
+The mapping of these "labels" to the 3D coordinates of the object is calculated and stored by the central hub.
+The user can then access the 3D coordinates of any of the given modules via the central hub's software interface.
 
 \section{Implementation Plan}
 Below is a proposed plan for the project's implementation.
@@ -28,10 +25,9 @@ Early Deadline: End of this next week \\
 Expected Deadline: End of the quarter \\
 Late Deadline: First weekend of summer break \\
 \begin{itemize}
-\item Develop an algorithm to determine the position of IoT devices given distance from various reference nodes. This should include robust error handling
-\item Determine the physical mechanism that ascertains the device's distance from these reference nodes (i.e. communication protocol and hardware used)
-\item Determine the method by which the user can access the IoT devices, specifically how the user locates the device IoT device
-\item Determine the specification of the central hub hardware that contains the reference nodes if one needs to exist
+\item Develop an algorithm to determine the position of the modules. This should include robust error handling
+\item Determine the physical mechanism that ascertains the modules' distances from the central hub (i.e. communication protocol and hardware used)
+\item Determine the specification of the central hub and module hardware
 \end{itemize}
 
 \subsection{Stage 1}
@@ -39,54 +35,18 @@ Early Deadline: Week 0 of Fall 2018 quarter \\
 Expected Deadline: Before fall design review \\
 Late Deadline: End of winter break \\
 \begin{itemize}
-\item Write the program that determines IoT device position using algorithm determined in Stage 0. The input to the program at this stage is simply generated test data
-\item Using the hardware and protocol determined in Stage 0, write program (and configure hardware) to acquire the device's distance from a reference node. Data should be verified against hand measurements.
-\item Design and assemble the central hub hardware if one needs to exist
-\item Design a test UI to interact with a basic IoT device
+\item Write the program that determines a module's position using the algorithm determined in Stage 0. The input to the program at this stage is simply generated test data
+\item Design the central hub and module hardware
+\item Write a software interface so that the position of a module can be acquired from the central hub, assuming it has already been correctly calculated
 \end{itemize}
 
-% Testing with basic IoT device
 \subsection{Stage 2}
 Early Deadline: Before fall design review \\
 Expected Deadline: End of winter break \\
 Late Deadline: Before winter design review \\
 \begin{itemize}
-\item Determine a trivially simple IoT device to use for the test
-\item Integrate the components developed in Stage 1 into one system
-\item Test using the UI to turn on/off the IoT device selected. If central hub is used, the test should pass even in the presence of obstacles between the device and the hub.
+\item Manufacture the central hub with an acceptable number of modules
+\item Integrate the software written in stage 1 with the assembled hardware
+\item Test the system with the modules
 \end{itemize}
-
-% Developing a more scalable system
-\subsection{Stage 3}
-Early Deadline: End of fall quarter \\
-Expected Deadline: End of winter break \\
-Late Deadline: Before winter design review \\
-\begin{itemize}
-\item Determine the interface a hardware vendor must provide to the system to utilize the device's functionality
-\item Determine how a UI is to be generated from information on IoT device
-\item Ensure that the existing protocol supports an arbitrary number of IoT devices. Tweak algorithms if necessary
-\end{itemize}
-
-% Designing the more scalable system
-\subsection{Stage 4}
-Early Deadline: End of winter break \\
-Expected Deadline: Before winter design review \\
-Late Deadline: N/A \\
-\begin{itemize}
-\item Write the UI generator. The input is simply descriptions of fictitious IoT devices.
-\item Develop the current system so that IoT device information and capabilities are sent to the user
-\item Test the current on-off system on multiple trivially simple devices
-\end{itemize}
-
-% Testing the more scalable system
-\subsection{Stage 5}
-Early Deadline: Before winter design review \\
-Expected Deadline: N/A \\
-Late Deadline: N/A \\
-\begin{itemize}
-\item Develop a few simple IoT setups with limited functionality. Write the hardware specification for these. (i.e. three LEDs and a choice to turn on one of them)
-\item Integrate the system with the UI generator.
-\item Test the setup
-\end{itemize}
-
 \end{document}

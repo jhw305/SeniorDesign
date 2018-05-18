@@ -1,0 +1,36 @@
+A methodology that allows hardware vendors to present a common and secure interface for IoT devices to end-users so that one application can be used to control all of the devices. This is in contrast to vendors creating their own specific application for each device. It cuts software development costs for IoT hardware vendors, which may often end up costing more than the hardware itself in the case of semiconductors, and it improves the user experience by drastically simplifying access to their different IoT devices.
+
+----------------------
+
+Use nonvolatile memory (NVM) to store a sort of table that maps the description of a capability to the capability itself.
+Ideally hardware independent comm. protocol to communicate capabilities and commands to and from the controller. Might just have to end up using TCP.
+Proof-of-concept implementation will be a specific version of this: say MCU with a wifi chip and a flash mem chip on a pcb.
+
+Hardware vendor defines capabilities and permissions for accessing capabilities.
+
+Two packet types
+- Acquire capability (acq_cap)
+	- receive packet
+	- use proper security measures to verify that the source of the packet is allowed to receive capability
+	- once verified, fetch capability information from NVM (this could flash memory or maybe MCU on-chip memory if it falls in this category, etc.)
+	- send packet back to controller (need security on the controller's end to ensure no 1337 haxors lol)
+- Invoke capability (inv_cap)
+	- receive packet
+	- security check
+	- once verified, call function from NVM
+Maybe include acking if not using something like TCP that already supports this?
+
+1) Define packet format.
+2) Define format used to store capabilities in NVM and abstractly describe capabilities of a device.
+3) Write hardware independent C code that facilitates this protocol. This would sit on your NVM. We may also need to describe how to set this up in a very straightforward way.
+4) A proof-of-concept test setup that allows us to test this protocol with the app.
+
+We assume all IoT devices use a CPU (and not something like a GPU or FPGA) for executing instructions. Future implementations may need to relax this constraint.
+
+EXTENSIVE ERROR CHECKING IN PROTOCOL
+
+The app
+-------
+Dynamically acquires capabilities of a device so that vendors can update the device whenever they want
+Somehow we'll use it to facilitate acquiring the proper access privileges to your IoT devices
+Allows you to organize IoT devices by category and generates UIs dynamically for devices so you can seamlessly control them
