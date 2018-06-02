@@ -1,0 +1,73 @@
+\documentclass{article}
+\begin{document}
+\begin{center}
+{\Large Indoor Positioning System for Inventory Management} \\
+{\small Jesse Campbell, Roman Parise, Jason Wang, Tanner Emerson, Chandler Ditolla}
+\end{center}
+\section{Project Description}
+We propose a system for keeping track of the physical location of an outlet or grocery store's inventory, and to allow that information to be utilized by consumers and the store itself. \\
+For consumers, we plan to create a mobile application that will point them towards the location of the item they are looking for, and potentially find the shortest path between all items in their 'shopping list'. \\
+For stores, there are currently protective devices physically attatched to a number of expensive products, such as high end clothing, alcohol, razor blades, etc, that already contain RFID modules in order to alert the store if they pass through the exit. Our system would replace this, as well as provide the store real time information on the location of their goods. For inexpensive goods whose cost does not justify security measures, the device could be placed on relevant shelving.\\
+This system consists of the following components:
+\begin{itemize}
+\item A large number of small, inexpensive modules that can be attached to the objects \\
+\item A 'central hub' that serves as the location anchor of our system. This consists of a single processing unit and at least 3 nodes arroyed across a ceiling in a known configuration. This anchor constantly pings then uses triliteration to keep track of the coordinates of the modules with respect to itself \\
+\item A software interface that allows the end user to acquire the coordinates of the modules \\
+\end{itemize}
+The modules are to be designed so that they are easy to mass produce to ensure that the system is scalable.
+The user attaches the module to a product or location of interest, and then associates that module to the relevant item in a database of item's that store sells.
+The mapping of these "labels" to the coordinates of the object is calculated and stored by the central hub.
+The user can then access the coordinates of any of the given modules via the central hub's software interface.
+
+\section{Implementation Plan}
+Below is a proposed plan for the project's implementation.
+\subsection{Stage 0}
+Early Deadline: End of this next week \\
+Expected Deadline: End of the quarter \\
+Late Deadline: First weekend of summer break \\
+\begin{itemize}
+\item Develop an algorithm to determine the position of the modules. This should include robust error handling
+\item Determine the physical mechanism that ascertains the modules' distances from the central hub (i.e. communication protocol and hardware used)
+\item Determine the specification of the central hub and module hardware
+\item Determine the method of communication between the central hub and the user's devices (Rasperberry Pi, etc.)
+\end{itemize}
+
+\subsection{Stage 1}
+Early Deadline: Week 0 of Fall 2018 quarter \\
+Expected Deadline: Before fall design review \\
+Late Deadline: End of winter break \\
+\begin{itemize}
+\item Write the program that determines a module's position using the algorithm determined in Stage 0. The input to the program at this stage is simply generated test data \\
+\item Design the central hub and module hardware \\
+\item Write a software interface so that the position of a module can be acquired from the central hub, assuming it has already been correctly calculated
+\end{itemize}
+
+\subsection{Stage 2}
+Early Deadline: Before fall design review \\
+Expected Deadline: End of winter break \\
+Late Deadline: Before winter design review \\
+\begin{itemize}
+\item Manufacture the central hub with an acceptable number of modules \\
+\item Integrate the software written in stage 1 with the assembled hardware \\
+\item Test the system with the modules
+\end{itemize}
+
+\subsection{Stage 3}
+Early Deadline: End of winter break \\
+Expected Deadline: Mid winter quarter \\
+Late Deadline: Before winter design review \\
+\begin{itemize}
+\item Devise a method to associate a building's drawn physical layout with our system. \\
+\item Create the mobile application \\
+\item Integrate the system with a database and test for full functionality \\
+\item Test the system with the modules
+\end{itemize}
+
+\subsection{Stage 4}
+Early Deadline: End of winter quarter \\
+Expected Deadline: Before winter design review \\
+Late Deadline: N/A \\
+\begin{itemize}
+\item Plan and consturct what will be presented at winter design review. \\
+\end{itemize}
+\end{document}
