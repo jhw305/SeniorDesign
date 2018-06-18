@@ -1,3 +1,3 @@
-goals: goals.tex
-	pdflatex goals.tex
-	pdflatex goals.tex
+proposal: proposal.tex
+	pdflatex proposal.tex
+	pdflatex proposal.tex
