@@ -51,6 +51,10 @@ The processor needs to be off-chip. Received data is sent to the processor via a
 Some on-chip memory is available: an 8KiB TX buffer and two 8KiB RX buffers.
 Two RX buffers are used so that a packet can be received while one is being read from the other RX buffer.
 
+p. 27 - General Calibration for the DW1000 Chips
+In order to measure the ranges accurately, the antenna delay must be calibrated between two dw1000 devices
+with a known distance. Calibration is recommended to be done for the transmission as well. 
+
 p. 58 - OTP Memory Guide
 Probably can be used for setting TX power levels and such
 
