@@ -21,23 +21,27 @@ DW1000 is a half-duplex device. Can either be receiving or transmitting, but NOT
 Note: When exiting SLEEP or DEEPSLEEP via wakeup signal, 500us delay.
 7us delay when entering SLEEP or DEEPSLEEP because data is copied to AON memory
 - OFF
-	- 0
+	- 0A
 	- Powered off. No applied voltages.
 - WAKEUP
+	- Current: ?
 	- Lasts about 4ms before entering the INIT state
 	- Crystal oscillator turned on
 - RX
+	- Current: ?
 	- Receive a frame
 	- After frame is received or error/timeout occurs, return to IDLE state
 	- If ARXSLP is enabled, enter SLEEP or DEEPSLEEP
 	- Turnaround time RX to TX: 10us.
 - RX PREAMBLE SNIFF
 - TX
+	- Current: ? (may depend on output TX power setting)
 	- Transmit a frame
 	- After we finish transmitting a frame, return to IDLE state
 	- If ATXSLP bit is set, go into SLEEP or DEEPSLEEP mode assuming no host interrupts are pending.
 	- Turnaround time TX to RX: 6us.
 - SNOOZE
+	- Current: ?
 	- Like the INIT state
 	- But a counter is running. When counter runs out, automatically enters RX state.
 FSM for states - user manual (pg. 15)
@@ -47,13 +51,19 @@ The processor needs to be off-chip. Received data is sent to the processor via a
 Some on-chip memory is available: an 8KiB TX buffer and two 8KiB RX buffers.
 Two RX buffers are used so that a packet can be received while one is being read from the other RX buffer.
 
+p. 58 - OTP Memory Guide
+Probably can be used for setting TX power levels and such
+
 Information on MAC unit (pg. 25) - timestamping, acking, etc.
 BW, channel, and data rate info (pg. 17)
 Output power and spectrum control to meet FCC standards (pg. 19)
 Includes temperature and voltage monitors - maybe warn user that it's too hot or that you're running low on power or something
 48 pins and one ground pin
 
-Buy test boards?
+-----
+Need to buy test boards
+Probably want to confirm timing and current levels in actual tests with the board
+Ensure that the lifetime of whatever design can be tested in practice (maybe some setting on the board that drains all the battery power through rapid testing) - maybe current amplifier to reduce the lifetime by a factor of 10 - 100
 
 -----
 Ideas for simulation
