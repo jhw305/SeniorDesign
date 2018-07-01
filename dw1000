@@ -1,0 +1,72 @@
+What are the operating states of the DW1000? How much current does a DW1000 state consume?
+DW1000 is a half-duplex device. Can either be receiving or transmitting, but NOT both.
+- IDLE
+	- 18mA without DC/DC, 12mA with DC/DC
+	- Most components are clock gated to save power. CLKPLL is locked and running.
+	- Analog receive and transmit circuitry is not powered
+	- Can be informed to enter TX or RX state. This transition can also be delayed per the user.
+- INIT
+	- 4mA
+	- No SPI accesses allowed
+	- Turns on CLKPLL
+	- 5us before CLKPLL locking and then go to IDLE state
+- SLEEP
+	- 1uA
+	- Make sure not to power GPIO and other pins to keep leakage current low
+	- Can either wakeup using external WAKEUP signal or by use of a counter and a low power ring oscillator used in the chip
+- DEEPSLEEP
+	- 50nA
+	- Only always-on (AON) memory is on
+	- Remains in DEEPSLEEP until WAKEUP is signal is supplied
+Note: When exiting SLEEP or DEEPSLEEP via wakeup signal, 500us delay.
+7us delay when entering SLEEP or DEEPSLEEP because data is copied to AON memory
+- OFF
+	- 0
+	- Powered off. No applied voltages.
+- WAKEUP
+	- Lasts about 4ms before entering the INIT state
+	- Crystal oscillator turned on
+- RX
+	- Receive a frame
+	- After frame is received or error/timeout occurs, return to IDLE state
+	- If ARXSLP is enabled, enter SLEEP or DEEPSLEEP
+	- Turnaround time RX to TX: 10us.
+- RX PREAMBLE SNIFF
+- TX
+	- Transmit a frame
+	- After we finish transmitting a frame, return to IDLE state
+	- If ATXSLP bit is set, go into SLEEP or DEEPSLEEP mode assuming no host interrupts are pending.
+	- Turnaround time TX to RX: 6us.
+- SNOOZE
+	- Like the INIT state
+	- But a counter is running. When counter runs out, automatically enters RX state.
+FSM for states - user manual (pg. 15)
+
+Is there a programmable processor on chip? If so, how much on-chip memory is available, and is there an available API?
+The processor needs to be off-chip. Received data is sent to the processor via an SPI interface.
+Some on-chip memory is available: an 8KiB TX buffer and two 8KiB RX buffers.
+Two RX buffers are used so that a packet can be received while one is being read from the other RX buffer.
+
+Information on MAC unit (pg. 25) - timestamping, acking, etc.
+BW, channel, and data rate info (pg. 17)
+Output power and spectrum control to meet FCC standards (pg. 19)
+Includes temperature and voltage monitors - maybe warn user that it's too hot or that you're running low on power or something
+48 pins and one ground pin
+
+Buy test boards?
+
+-----
+Ideas for simulation
+
+Two parts to sim env:
+Environment
+	Abstract class for a device - DW1000 inherits this device class.
+		- FSM that describes transition times and current consumed. Maybe some randomness allowed as well.
+		- Simulate clk speeds for SPI communications and such in each state. (state and FSM classes?)
+		- SPICE models available for chip?
+Architecture Spec
+
+From arch spec, we can:
+Generate documentation
+Generate source
+	- Should be somewhat machine independent. It is reasonable to believe that we could use a different chip.
