@@ -28,7 +28,7 @@ Note: When exiting SLEEP or DEEPSLEEP via wakeup signal, 500us delay.
 	- Lasts about 4ms before entering the INIT state
 	- Crystal oscillator turned on
 - RX
-	- Current: ?
+	- Current: on a byte by byte basis it consumes 113ma and goes into a 12ma wait for the next byte? (p. 32)
 	- Receive a frame
 	- After frame is received or error/timeout occurs, return to IDLE state
 	- If ARXSLP is enabled, enter SLEEP or DEEPSLEEP
