@@ -1,0 +1,55 @@
+Parts of the simulation environment:
+
+FSM Implementation
+	- Each node has a current consumption value associated with it.
+	- Each transition has a delay given in simulation timesteps (say 1us resolution).
+
+Device Model (could be used to model devices or central hub)
+	- Uses an FSM to describe how it works
+	- The states and parameters of the FSM can be controlled by external control signals and AON and OTP memory.
+	- Keeps track of module lifetime based on source of charge and current consumed by the FSM
+	- Would verify FSM for DW1000 through actual laboratory measurements
+
+Architecture Specification
+	- Most likely some kind of a struct or a class
+	- A set of parameters that describes the control algorithm and how the devices (modules and central hub included) are configured
+
+Hardware-Software Wrapper Interface
+	- Abstracts low-level SPI control signals sent to device
+	- Presents a high-level interface to the DW1000 to the programmer
+	- Designed so that you can swap out the chip. The high-level interface remains the same, but the low-level control signals and bits that need to be set can be changed for different chips.
+	- Most likely used to generate some C code for a high-level "command" we want to issue to the device
+
+Simulation Itself
+	- A bunch of devices and a central hub
+	- Keeps track of global sim time
+	- Keeps track of important parameters: how many locations were incorrectly predicted, the module lifetime, etc.
+
+Code Generator
+	- Architecture specification and HS Wrapper are the "arguments" in a sense
+	- You generate the code for the central hub and devices based on the algorithms and low-level interfacing
+	- Your "algorithm" described in the architecture spec can be broken down into commands and used to generate the code for the central hub and the modules
+	- You can also generate documentation for your system from the architecture specification. This beats manually writing it out. :)
+
+Why do things this way?
+- We want a simulation to predict how the system will perform before implementing it. Otherwise, we will waste time on poor implementations and have to perform quite a bit of manual work to fix what we've done.
+- The simulation could be ignoring important physical parameters. So, we may want to change it later. We don't want to write the code for the devices and implement the system all for it to turn out that our models were bad the whole time. This is why we generate the code for the system, evaluate whether it actually works, and then simulate a different architecture and quickly re-generate the code.
+- We want to abstract the DW1000 control signals since we don't know that we'll always be using the DW1000. This way, we can easily swap out thechip when we implement the actual hardware for the winter design review.
+
+Responsibilities:
+1) Implementing FSM and device model data structure
+2) Implementing architecture specification data structure
+3) Implementing FSM for the DW1000 (worry about how central hub fits into this later)
+4) Implementing the simulation environment
+5) Implementing the HS Wrapper interface and the code generator
+
+Plan:
+We can use the off-the-shelf board for the DW1000 and a simple MCU.
+We can just wire these parts together via GPIO.
+We test different architectures and generate the code for the best one.
+We present this simplistic proof-of-concept at the fall design review.
+
+Now, we have a working system.
+We then design the actual hardware (3D printed part and PCBs).
+We also work on a user-interface.
+We present a finished product at the winter design review.
