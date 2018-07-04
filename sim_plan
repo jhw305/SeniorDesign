@@ -21,3 +21,4 @@ Specific error correction codes, network protocol and acking behaviors, modulati
 Notes for Our Code
 ------------------
 We should use documentation generator like Doxygen
+Some test suite should be used before allowing code to be pushed to Github
