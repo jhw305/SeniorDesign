@@ -28,7 +28,7 @@ Note: When exiting SLEEP or DEEPSLEEP via wakeup signal, 500us delay.
 	- Lasts about 4ms before entering the INIT state
 	- Crystal oscillator turned on
 - RX
-	- Current: ?
+	- Current: on a byte by byte basis it consumes 113ma and goes into a 12ma wait for the next byte? (p. 32)
 	- Receive a frame
 	- After frame is received or error/timeout occurs, return to IDLE state
 	- If ARXSLP is enabled, enter SLEEP or DEEPSLEEP
@@ -50,6 +50,10 @@ Is there a programmable processor on chip? If so, how much on-chip memory is ava
 The processor needs to be off-chip. Received data is sent to the processor via an SPI interface.
 Some on-chip memory is available: an 8KiB TX buffer and two 8KiB RX buffers.
 Two RX buffers are used so that a packet can be received while one is being read from the other RX buffer.
+
+p. 27 - General Calibration for the DW1000 Chips
+In order to measure the ranges accurately, the antenna delay must be calibrated between two dw1000 devices
+with a known distance. Calibration is recommended to be done for the transmission as well. 
 
 p. 58 - OTP Memory Guide
 Probably can be used for setting TX power levels and such
