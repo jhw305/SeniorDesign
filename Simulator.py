@@ -10,6 +10,8 @@ from numpy.linalg import norm
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
+SPEED_OF_LIGHT = 299792458
+
 class Device:
     def __init__(self, x: float, y: float, z: float):
         self.x = x
@@ -19,14 +21,14 @@ class Device:
 class Anchor(Device):
 
     def findRadius(self):
-        self.radius = self.RTOF * 299792458 / 2
+        self.radius = self.RTOF * SPEED_OF_LIGHT / 2
     
     def pingDeviceWithoutError(self, sensor: Device):
         deltaX = sensor.x - self.x
         deltaY = sensor.y - self.y
         deltaZ = sensor.z - self.z
         magnitude = math.sqrt(deltaX*deltaX + deltaY*deltaY + deltaZ*deltaZ)
-        self.RTOF = magnitude*2/299792458
+        self.RTOF = magnitude*2/SPEED_OF_LIGHT
 
     def pingDeviceWithNumericalError(self, sensor: Device, maxError: float):
         deltaX = sensor.x - self.x
@@ -34,7 +36,7 @@ class Anchor(Device):
         deltaZ = sensor.z - self.z
         magnitude = math.sqrt(deltaX*deltaX + deltaY*deltaY + deltaZ*deltaZ)
         error = random.uniform(-maxError, maxError)
-        self.RTOF = magnitude*error*2/299792458
+        self.RTOF = magnitude*error*2/SPEED_OF_LIGHT
 
     def pingDeviceWithPercentError(self, sensor: Device, percentError: float):
         deltaX = sensor.x - self.x
@@ -43,7 +45,7 @@ class Anchor(Device):
         magnitude = math.sqrt(deltaX*deltaX + deltaY*deltaY + deltaZ*deltaZ)
         magnitude = random.uniform(magnitude - magnitude * (100 - percentError) / 100,
                                    magnitude + magnitude * (100 - percentError) / 100)
-        self.RTOF = magnitude*2/299792458
+        self.RTOF = magnitude*2/SPEED_OF_LIGHT
 
 class Hub:
     def __init__(self):
