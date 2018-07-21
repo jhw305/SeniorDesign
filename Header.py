@@ -9,7 +9,7 @@ class SimulationEnvironment():
         #Reads a file, possibly in JSON format, and generates a hub with anchors and nodes as specified in that file.
     def update():
         #Calls update function of each device and the hub, increments time.
-        self.time++
+        self.time += 1
         nodeMap = self.hub.update()
         if (nodeMap):
             analyze(nodeMap)
@@ -62,13 +62,13 @@ class Simulated():
 
     def update():
         #Possibly a general update() for every non-SimulationEnvironment class?
-        self.time++
+        self.time += 1
         if self.actions[0]: #Checks if there an action to perform
             if self.actionTimer == 0: #Checks to see if more simulated time is required to perform that action
                 self.actions[0].execute() #Executes action
                 self.actions.pop(0) #Removes action from list
                 if self.actions[0]: #If there is another action, gets how much simulated time necessary before action is finished
                     self.actionTimer = self.actions[0].getExecutionDelay()
-            else self.actionTimer--
+            else self.actionTimer -= 1
             
         
