@@ -1,0 +1,38 @@
+Action Object
+-------------
+3 members
+- Member 1: Function to be called
+- Member 2: Array of function arguments
+- Member 3: Counter that keeps track of how long we have until the next state
+
+Simulated
+---------
+	Simulated (abstract class)
+	/      \
+     Device   Hub
+
+Device
+------
+Each device has an action queue. Whenever it performs action, push to action queue. (Action object)
+- Queue is an array of action objects. [ Action1 , Action2, ... ]
+Every time the update function is called, decrement the counter of the first action in the action queue.
+If the counter is 0, then call the function with the corresponding arguments. Pop the action object off the queue.
+If the action queue is empty, then do nothing.
+Sim env calls update function on device.
+
+Anchor
+- instance of the Device class
+- Sim env has an array of anchors that are used to ping the device
+- Also has an array of nodes
+Sim env
+- InitializeNetwork :: generate hub, nodes, and anchors based on arch spec parameters
+- analyze :: runs the simulation and takes note of system lifetime and average error in position
+- signal_list :: keeps track of all the signals sent from device/anchor to device/anchor
+		       
+Hub
+- pingNode :: pass reference to device object as an argument ;
+	      enqueue all of the pinging actions for the anchors
+- generateMap :: calls pingNode for the different nodes in the network ;
+		 acquires the position of each one based on the arch spec
+
+Arch spec - needs to work with generated map
