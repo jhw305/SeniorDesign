@@ -16,15 +16,15 @@ Simulated
 
 State
 -----
-- physical_params :: dictionary; keys are strings, the name of the parameter (i.e. current);
-		     values are functions that take one argument, the physical_params dictionary;
+- physical_data :: dictionary; keys are strings, the name of the parameter (i.e. current);
+		     values are functions that take one argument, the physical_data dictionary;
 		     these functions are called whenever the value is desired by the user;
 		     if there is a value that depends on another value, it can be accessed in the
-		     function definition via the physical_params dictionary argument; the functions
+		     function definition via the physical_data dictionary argument; the functions
 		     must have a return value
-- getParam( param ) :: calls the function in the physical_params dictionary and returns that function's
+- getParam( param ) :: calls the function in the physical_data dictionary and returns that function's
 		       return value
-- __init__( self , physical_params )
+- __init__( self , physical_data )
 
 Device
 ------
@@ -48,10 +48,10 @@ Sim env calls update function on device.
 			   states list, throw an error/assertion failure; if it is in the list,
 			   push a call to __setState with the proper state argument and delay
 			   to the action queue
-- physical_params :: a dictionary in the device ; calls functions with two arguments, however;
-		     first argmuent is the device's physical_params and the second argument is
-		     the state's physical_params
-- getParam( param ) :: same idea as for states, but for the device's physical_params
+- physical_data :: a dictionary in the device ; calls functions with two arguments, however;
+		     first argmuent is the device's physical_data and the second argument is
+		     the state's physical_data
+- getParam( param ) :: same idea as for states, but for the device's physical_data
 - __init__( self , available_states , initial_state )
 Whenever we transition from one state to another, we push a call to setState to the action queue with a delay
 equal to the transition delay. These delays and states are device-specific parameters.
@@ -75,10 +75,45 @@ Hub
 - generateMap :: calls pingNode for the different nodes in the network ;
 		 acquires the position of each one based on the arch spec
 
+Arch Spec
+---------
 Arch spec - needs to work with generated map
+
+- method: central hub main loop function
+- int: anchor node separation (side length of a square with each corner being an anchor node)
+- int: distance anchor modules are from the central hub (central hub is treated as origin)
+- device_object: the device we're using for the module (ex. DW1000 with microcontroller or something). We need this so we can make device-specific specifications. The sim env acquires the device from this object.
+- object for corresponding *.so file (C file is run on anchor nodes; placed in on-board user app thread)
+	- We can choose between UART and SPI communication
+		- SPI is faster and costs less.
+		- UART is good if you have a shortage of pins since SPI requires more pins.
+		- UART results in lower hardware complexity compared to SPI.
+		- SPI consumes less power than I2C. Apparently, SPI consumes less power than
+		UART: http://cc.oulu.fi/~kmikhayl/site-assets/pdfs/2012_NTMS.pdf .
+	- by default, DWM1001 parses received requests in a thread
+	- so, we'll most likely need to write the on-board user app thread
+		- Central hub code is run in Python. We need a way to set up the network. The pinging mechanism and network interface in the C code should be the same. For instance, if we relay distances back to the central hub via IP addresses, we can get this to work in simulation just by saying the central hub is localhost.
+		- Jesse's simulator code can be used for the central hub's computation
+
+Topics for Today's Meeting
+--------------------------
+0) Jesse's code update
+1) Update from Tanner on the boards and setting up the server.
+2) Update from Chandler and Roman on device/FSM classes. Also, paper pushed on SPI vs UART vs I2C power consumption.
+3) Intergrating the architecture spec into the current design. How can architecture spec control the hub's main loop? We want to experiment with different main loops. Should this be C code/*.so library as well? Maybe the same one as the anchor with preprocessor directives during builds for the different pieces of hardware?
+4) What network/communication protocol is used by the DW1000? Is there a way that we can run the same network code in the simulator/C library that we would in the field? If so, we can abstract much of the software development from the hardware by working at the network layer.
+5) Current design plan is to simply provide different *.so libraries to the architecture spec for the anchor code. This way, we can easily test different system designs with nuanced setups.
+6) What code are we gonna write this week? Code review for next week to ensure code readibility, error checking, and robustness. Also decide how to clean up and organize repo next week.
+
+Questions for when we get the board
+- Can we control the clock speed? (either SPI clock or CPU/DW1000 clock)
 
 TODOs
 -----
 How to encapsulate objects and have headers
 - Encapsulation :: private method and variable names begin with "__"
 - Headers? Packages?
+Need moving nodes
+Need to have breakdown of power consumption. What is actually draining the battery?
+What does node/anchor do when it receives packets?
+FSM for SPI and UART interface? How to handle that.
