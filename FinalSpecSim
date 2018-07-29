@@ -10,9 +10,19 @@ setCounter( n ) :: set the counter to n
 
 Simulated
 ---------
+
 	Simulated (abstract class)
-	/      \
-     Device   Hub
+	/    |   \
+     Device etc. Hub
+
+mainloop( ) - the function to be called in some sort of a
+	      while( True ) loop
+
+Each Simulated type has an action queue. Whenever it performs action, push to action queue. (Action object)
+- Queue is an array of action objects. [ Action1 , Action2, ... ]
+Every time the update function is called, decrement the counter of the first action in the action queue.
+If the counter is 0, then call the function with the corresponding arguments. Pop the action object off the queue.
+If the action queue is empty, then do nothing.
 
 State
 -----
@@ -28,11 +38,6 @@ State
 
 Device
 ------
-Each device has an action queue. Whenever it performs action, push to action queue. (Action object)
-- Queue is an array of action objects. [ Action1 , Action2, ... ]
-Every time the update function is called, decrement the counter of the first action in the action queue.
-If the counter is 0, then call the function with the corresponding arguments. Pop the action object off the queue.
-If the action queue is empty, then do nothing.
 Sim env calls update function on device.
 - current_state :: an instance of the State class
 - __setState( state ) :: sets dev_state to a particular State object
@@ -66,24 +71,28 @@ Anchor
 - Also has an array of nodes
 Sim env
 - InitializeNetwork :: generate hub, nodes, and anchors based on arch spec parameters
+	- instantiate however many hubs, nodes, and anchors we need based on the types specified
+	in architecture spec
 - analyze :: runs the simulation and takes note of system lifetime and average error in position
+	- run mainloop() function for hubs, nodes, and anchors in some sort of a while( True ) loop
 - signal_list :: keeps track of all the signals sent from device/anchor to device/anchor
-		       
-Hub
-- pingNode :: pass reference to device object as an argument ;
-	      enqueue all of the pinging actions for the anchors
-- generateMap :: calls pingNode for the different nodes in the network ;
-		 acquires the position of each one based on the arch spec
 
 Arch Spec
 ---------
 Arch spec - needs to work with generated map
 
-- method: central hub main loop function
-- int: anchor node separation (side length of a square with each corner being an anchor node)
-- int: distance anchor modules are from the central hub (central hub is treated as origin)
-- device_object: the device we're using for the module (ex. DW1000 with microcontroller or something). We need this so we can make device-specific specifications. The sim env acquires the device from this object.
-- object for corresponding *.so file (C file is run on anchor nodes; placed in on-board user app thread)
+- hubclass :: class for the central hub
+	- most likely write mainloop() in Python
+	- Jesse's simulator code can be used for the central hub's computation
+	- the API can also be used to perform computations on the nodes
+	- functions called within mainloop
+		- pingNode :: pass reference to device object as an argument ;
+			      enqueue all of the pinging actions for the anchors
+		- generateMap :: calls pingNode for the different nodes in the network ;
+				 acquires the position of each one based on the arch spec
+- anchorclass :: class for the anchor node (likely just "Device")
+	- __init__ will most likely get C library
+	- mainloop() will probably just call the C library
 	- We can choose between UART and SPI communication
 		- SPI is faster and costs less.
 		- UART is good if you have a shortage of pins since SPI requires more pins.
@@ -92,24 +101,17 @@ Arch spec - needs to work with generated map
 		UART: http://cc.oulu.fi/~kmikhayl/site-assets/pdfs/2012_NTMS.pdf .
 	- by default, DWM1001 parses received requests in a thread
 	- so, we'll most likely need to write the on-board user app thread
-		- Central hub code is run in Python. We need a way to set up the network. The pinging mechanism and network interface in the C code should be the same. For instance, if we relay distances back to the central hub via IP addresses, we can get this to work in simulation just by saying the central hub is localhost.
-		- Jesse's simulator code can be used for the central hub's computation
-
-Topics for Today's Meeting
---------------------------
-0) Jesse's code update
-1) Update from Tanner on the boards and setting up the server.
-2) Update from Chandler and Roman on device/FSM classes. Also, paper pushed on SPI vs UART vs I2C power consumption.
-3) Intergrating the architecture spec into the current design. How can architecture spec control the hub's main loop? We want to experiment with different main loops. Should this be C code/*.so library as well? Maybe the same one as the anchor with preprocessor directives during builds for the different pieces of hardware?
-4) What network/communication protocol is used by the DW1000? Is there a way that we can run the same network code in the simulator/C library that we would in the field? If so, we can abstract much of the software development from the hardware by working at the network layer.
-5) Current design plan is to simply provide different *.so libraries to the architecture spec for the anchor code. This way, we can easily test different system designs with nuanced setups.
-6) What code are we gonna write this week? Code review for next week to ensure code readibility, error checking, and robustness. Also decide how to clean up and organize repo next week.
+- nodeclass :: class for the other nodes (likely just "Device")
+	- same notes as anchorclass
+- int: anchor node separation (side length of a square with each corner being an anchor node)
+- int: distance anchor modules are from the central hub (central hub is treated as origin)
 
 Questions for when we get the board
 - Can we control the clock speed? (either SPI clock or CPU/DW1000 clock)
 
 TODOs
 -----
+How does Hub receive information on the available nodes?
 How to encapsulate objects and have headers
 - Encapsulation :: private method and variable names begin with "__"
 - Headers? Packages?
