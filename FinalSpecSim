@@ -3,13 +3,28 @@ Action Object
 3 members
 - Member 1: Function to be called
 - Member 2: Array of function arguments
-- Member 3: Counter that keeps track of how long we have until the next state
+- Member 3: Counter that keeps track of how long we have until the function is called with the desired arguments
+decrement( int n = 1 ) :: decrement the counter by n, where n is 1 by default; when the counter hits or drops below
+			  0, call the function and reset the counter to 0.
+setCounter( n ) :: set the counter to n
 
 Simulated
 ---------
 	Simulated (abstract class)
 	/      \
      Device   Hub
+
+State
+-----
+- physical_params :: dictionary; keys are strings, the name of the parameter (i.e. current);
+		     values are functions that take one argument, the physical_params dictionary;
+		     these functions are called whenever the value is desired by the user;
+		     if there is a value that depends on another value, it can be accessed in the
+		     function definition via the physical_params dictionary argument; the functions
+		     must have a return value
+- getParam( param ) :: calls the function in the physical_params dictionary and returns that function's
+		       return value
+- __init__( self , physical_params )
 
 Device
 ------
@@ -19,6 +34,31 @@ Every time the update function is called, decrement the counter of the first act
 If the counter is 0, then call the function with the corresponding arguments. Pop the action object off the queue.
 If the action queue is empty, then do nothing.
 Sim env calls update function on device.
+- current_state :: an instance of the State class
+- __setState( state ) :: sets dev_state to a particular State object
+- getState() :: returns dev_state
+- update() :: calls the decrement() method for the action at the top of the action queue
+- available_states :: dictionary; keys are the state objects in the FSM; values are named
+		      tuples ( nextstate - state object ; delay - the transition delay ) ;
+		      the value arrays can potentially be empty; the dictionary must have
+		      at least one state as a key
+- getAvailableNextStates( ) :: use the available_states dictionary and return the array of
+			       named tuples
+- setNextState( state ) :: provide the next state as an argument; if it is not the available next
+			   states list, throw an error/assertion failure; if it is in the list,
+			   push a call to __setState with the proper state argument and delay
+			   to the action queue
+- physical_params :: a dictionary in the device ; calls functions with two arguments, however;
+		     first argmuent is the device's physical_params and the second argument is
+		     the state's physical_params
+- getParam( param ) :: same idea as for states, but for the device's physical_params
+- __init__( self , available_states , initial_state )
+Whenever we transition from one state to another, we push a call to setState to the action queue with a delay
+equal to the transition delay. These delays and states are device-specific parameters.
+The simulation environment keeps track of average current consumption by calling getState() on the current
+state and then getParam( "current" ) for the current at each timestep.
+The sim env would get the battery life by calling getParam( "batt-life" ) on the device.
+The sim env would keep track of the lifetime of each device.
 
 Anchor
 - instance of the Device class
@@ -36,3 +76,9 @@ Hub
 		 acquires the position of each one based on the arch spec
 
 Arch spec - needs to work with generated map
+
+TODOs
+-----
+How to encapsulate objects and have headers
+- Encapsulation :: private method and variable names begin with "__"
+- Headers? Packages?
