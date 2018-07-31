@@ -15,8 +15,17 @@ Simulated
 	/    |   \
      Device etc. Hub
 
-mainloop( ) - the function to be called in some sort of a
-	      while( True ) loop
+mainloop( sim_list ) - the function to be called in some sort of a
+		       while( True ) loop; sim_list is a list (potentially
+		       empty []) of simulated types; common use case:
+	   	       the sim env passes a list of anchors to the central hub's
+		       mainloop function so it can communicate with those devices;
+		       returns an integer
+
+ex. Central hub in sim env
+while ( True ) :
+	if hub.mainloop( list_of_anchors ) == BREAK_INT_CONSTANT :
+		break
 
 Each Simulated type has an action queue. Whenever it performs action, push to action queue. (Action object)
 - Queue is an array of action objects. [ Action1 , Action2, ... ]
