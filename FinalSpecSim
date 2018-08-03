@@ -15,6 +15,8 @@ Simulated
 	/    |   \
      Device etc. Hub
 
+update() :: calls the decrement() method for the action at the top of the action queue
+
 mainloop( sim_list ) - the function to be called in some sort of a
 		       while( True ) loop; sim_list is a list (potentially
 		       empty []) of simulated types; common use case:
@@ -51,7 +53,6 @@ Sim env calls update function on device.
 - current_state :: an instance of the State class
 - __setState( state ) :: sets dev_state to a particular State object
 - getState() :: returns dev_state
-- update() :: calls the decrement() method for the action at the top of the action queue
 - available_states :: dictionary; keys are the state objects in the FSM; values are named
 		      tuples ( nextstate - state object ; delay - the transition delay ) ;
 		      the value arrays can potentially be empty; the dictionary must have
