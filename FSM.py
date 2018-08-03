@@ -23,6 +23,14 @@ TX_PHR_SEND_CURRENT = 48
 TX_PHR_SEND_TIME = 1.33  #TIME PER BYTE OF INFO SENT
 
 
+class State():
+    def __init__(self, physical_data):
+        self.physical_data = physical_data
+
+    def getParam(self, param):
+        return self.physical_data[param](self.physical_data)
+        
+        
 
 class DeviceFSM():
     def __init__(self):
@@ -66,14 +74,24 @@ class DeviceFSM():
 
     def runFSM(self, timetorun, pingfreq, recievesniff):
         while timetorun > self.runtime:
+            pass
             #Have a weighted rng to choose states based off of
             #how frequent we ping and then call the corresponding 
             #state to update with correct ampsmilisecs and runtime
             #for the device until we have run for the total timetorun
             #still needs to be written obviously
+        
 
+def getCurrent(physical_data):
+    return 5
 
+def getTime(physical_data):
+    return 'time'
 
+if __name__ == "__main__":
+    data = {'current' : getCurrent, 'time' : getTime}
+    s = State(data)
+    
             
 
 
