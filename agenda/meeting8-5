@@ -1,7 +1,12 @@
 - Going to email new senior design prof: Gaudiot. Please see updated proposal, specifically the implementation plan.
+	- Look over the implementation plan
 - Decawave boards update
 - Slides review
-- Simulation environment - unanswered questions
-- Kevin Ross inquiry
-- Need to organize repo and fix build system for Python
+	- Chandler - Device (w/ Tanner's help)
+	- Tanner - State
+	- Jason - Simulated
+	Python file + main method with unit tests
+- Simulation environment - unanswered questions (deferred to next week)
+- Kevin Ross inquiry (full as it is)
+- Need to organize repo and fix build system for Python (deferred to next week)
 - Questions
