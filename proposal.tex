@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{siunitx}
+\usepackage{url}
 \begin{document}
 \begin{center}
 {\Large Indoor Positioning System for Inventory Management} \\
@@ -65,9 +66,9 @@ Furthermore, the store can select which items are publicly available for end use
 
 Below is a proposed plan for the project's implementation.
 \subsection{Stage 0}
-Early Deadline: Beginning of August \\
-Expected Deadline: Beginning of September \\
-Late Deadline: Week 0 of Fall 2018 quarter \\
+Early Deadline: Beginning of September \\
+Expected Deadline: Week 0 of Fall 2018 quarter \\
+Late Deadline: Week 2 of Fall 2018 quarter \\
 \begin{itemize}
 \item Develop an algorithm to determine the position of the modules. This should include robust error handling
 \item Determine the physical mechanism that ascertains the modules' distances from the central hub (i.e. communication protocol and hardware used)
@@ -77,49 +78,38 @@ Late Deadline: Week 0 of Fall 2018 quarter \\
 
 \subsection{Stage 1}
 Early Deadline: Week 0 of Fall 2018 quarter \\
-Expected Deadline: Before fall design review \\
-Late Deadline: End of winter break \\
+Expected Deadline: Week 5 of Fall 2018 quarter \\
+Late Deadline: Before fall design review \\
 \begin{itemize}
-\item Write the program that determines a module's position using the algorithm determined in Stage 0. The input to the program at this stage is simply generated test data
-\item Begin testing and characterizing the DW1000
-\item Design the module hardware and implement on a breadboard for testing
-\item Write a software interface so that the position of a module can be acquired from the central hub, assuming it has already been correctly calculated
-\item Run basic tests with the breadboard modules and the software interface
+\item Begin testing and characterizing the DW1000 with the proposed algorithm
+\item Demonstrate a system with four anchor modules and one separate node using the DW1000
 \end{itemize}
 
 \subsection{Stage 2}
 Early Deadline: Before fall design review \\
-Expected Deadline: End of winter break \\
-Late Deadline: Before winter design review \\
+Expected Deadline: Beginning of winter quarter \\
+Late Deadline: Before week 2 of winter quarter \\
 \begin{itemize}
 \item Design a printed circuit board (PCB) for the next iteration of the modules
 \item Design the 3D printed housing and locking mechanism for the modules
-\item Manufacture an acceptable number of modules
-\item Integrate the software written in stage 1 with the assembled hardware
-\item Test the system with the modules
+\item Design a more useful user-interface for both the store and the customer
 \end{itemize}
 
 \subsection{Stage 3}
-Early Deadline: End of winter break \\
-Expected Deadline: Mid winter quarter \\
+Early Deadline: Before week 2 of winter quarter \\
+Expected Deadline: Before week 5 of winter quarter \\
 Late Deadline: Before winter design review \\
 \begin{itemize}
+\item Manufacture an acceptable number of modules
+\item Integrate the software written in stage 2 with the assembled hardware
 \item Devise a method to associate a building's drawn physical layout with our system
 \item Create the mobile application
 \item Integrate the system with a database and test for full functionality
 \item Test the system with the modules
 \end{itemize}
 
-\subsection{Stage 4}
-Early Deadline: End of winter quarter \\
-Expected Deadline: Before winter design review \\
-Late Deadline: N/A \\
-\begin{itemize}
-\item Plan and construct what will be presented at winter design review.
-\end{itemize}
-\end{document}
-
 \section{References}
 \begin{itemize}
-\item https://www.decawave.com/sites/default/files/resources/dw1000-datasheet-v2.09.pdf
+\item Decawave's DW1000 Datasheet V2.09
 \end{itemize}
+\end{document}
