@@ -51,11 +51,7 @@ class Device():
     def setNextState(state):
         Action(
         
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 4f04c4d6dae909534a4fd04ca77e7f7ed1268899
 class DeviceFSM():
     def __init__(self):
         self.state = "IDLE"
