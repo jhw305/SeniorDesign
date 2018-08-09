@@ -30,6 +30,27 @@ class State():
     def getParam(self, param):
         return self.physical_data[param](self.physical_data)
         
+
+class Device():
+    def __init__(self, available_states, initial_state, physical_data):
+        self.available_states = available_states
+        self.initial_state = initial_state
+        self.dev_state = initial_state
+        self.physical_data = physical_data
+        
+
+    def __setState(state):
+        dev_state = state
+
+    def getState():
+        return dev_state
+
+    def getAvailableNextStates():
+        return available_states[dev_state]
+
+    def setNextState(state):
+        Action(
+        
         
 
 class DeviceFSM():
