@@ -29,9 +29,8 @@ class State():
 
     def getParam(self, param):
         return self.physical_data[param](self.physical_data)
-        
-        
-
+    
+    
 class DeviceFSM():
     def __init__(self):
         self.state = "IDLE"
@@ -91,6 +90,7 @@ def getTime(physical_data):
 if __name__ == "__main__":
     data = {'current' : getCurrent, 'time' : getTime}
     s = State(data)
+    print(s.getParam('current'))
     
             
 
