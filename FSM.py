@@ -51,7 +51,6 @@ class Device():
     def setNextState(state):
         Action(
         
-        
 
 class DeviceFSM():
     def __init__(self):
