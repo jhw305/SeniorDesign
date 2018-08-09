@@ -37,19 +37,27 @@ class Device():
         self.initial_state = initial_state
         self.dev_state = initial_state
         self.physical_data = physical_data
+        self.next_states = self.getAvailableNextStates()
         
 
-    def __setState(state):
+    def __setState(self, state):
         dev_state = state
 
-    def getState():
+    def getState(self):
         return dev_state
 
-    def getAvailableNextStates():
-        return available_states[dev_state]
+    def getAvailableNextStates(self):
+        next_states = available_states[dev_state]
 
     def setNextState(state):
-        Action(
+        for next in next_state:
+            if state in next: 
+                Action(__setState, [state])
+                break
+
+    def getParam(self, param):
+        return self.physical_data[param]()
+    
         
 
 class DeviceFSM():
