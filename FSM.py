@@ -29,7 +29,7 @@ class State():
 
     def getParam(self, param):
         return self.physical_data[param](self.physical_data)
-        
+
 
 class Device():
     def __init__(self, available_states, initial_state, physical_data):
@@ -51,7 +51,11 @@ class Device():
     def setNextState(state):
         Action(
         
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 4f04c4d6dae909534a4fd04ca77e7f7ed1268899
 class DeviceFSM():
     def __init__(self):
         self.state = "IDLE"
@@ -111,6 +115,7 @@ def getTime(physical_data):
 if __name__ == "__main__":
     data = {'current' : getCurrent, 'time' : getTime}
     s = State(data)
+    print(s.getParam('current'))
     
             
 
