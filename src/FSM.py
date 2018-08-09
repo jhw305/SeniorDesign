@@ -7,6 +7,9 @@
 # Sending constants from page 32 fig. 32 from datasheet #
 #########################################################
 
+import simulated
+from action import Action
+
 OSC_STARTUP_SEND_CURRENT = 3
 OSC_STARTUP_SEND_TIME = 2000
 
@@ -52,7 +55,7 @@ class Device():
     def setNextState(state):
         for next in next_state:
             if state in next: 
-                Action(__setState, [state])
+                aq.addToQueue(Action(__setState, [state]))
                 break
 
     def getParam(self, param):
@@ -118,8 +121,10 @@ def getTime(physical_data):
 
 if __name__ == "__main__":
     data = {'current' : getCurrent, 'time' : getTime}
+    aq = simulated.ActionQueue()
     s = State(data)
     print(s.getParam('current'))
+    device = Device(
     
             
 
