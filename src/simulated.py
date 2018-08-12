@@ -3,6 +3,7 @@
 #############
 ## Imports ##
 #############
+import types
 from abc import ABC
 from action import Action
 DEBUG = True
@@ -12,7 +13,17 @@ DEBUG = True
 ## Classes ##
 #############
 class Simulated( ABC ) :
-	pass
+	#Jesse added code
+	def __init__( self ):
+		self.actionQueue = ActionQueue( )
+
+	def addAction( self, fn_to_be_called : types.FunctionType, fn_arg_list : list, ctr_val : int = 0 ):
+		self.actionQueue.addToQueue(Action(fn_to_be_called, fn_arg_list))
+
+	def update( ):
+		self.actionQueue.update( )
+		
+                
 
 
 class ActionQueue():
