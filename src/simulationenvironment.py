@@ -99,7 +99,7 @@ class Hub(Simulated):
     def triliterate():
         pass
             
-
+'''
 class Device(Simulated):
     def __init__(self, simEnv, time : int, ID : int, coordinates : list):
         super()
@@ -125,7 +125,7 @@ class Device(Simulated):
         if (not self.simEnv.checkAndDeleteSignal(self.ID, ID)):
             super().addAction(waitForResponse, [node.getID()])
 
-        
+'''        
 
                           
 
