@@ -20,7 +20,7 @@ class Simulated( ABC ) :
 	def addAction( self, fn_to_be_called : types.FunctionType, fn_arg_list : list, ctr_val : int = 0 ):
 		self.actionQueue.addToQueue(Action(fn_to_be_called, fn_arg_list))
 
-	def update( ):
+	def update( self ):
 		self.actionQueue.update( )
 		
                 
