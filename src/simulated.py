@@ -22,6 +22,10 @@ class Simulated( ABC ) :
 
 	def update( self ):
 		self.actionQueue.update( )
+
+	@abstractmethod
+	def mainloop( self, simlist: list ) -> int:
+		pass
 		
                 
 
