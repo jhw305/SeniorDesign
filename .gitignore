@@ -1,0 +1,8 @@
+.DS_Store
+.project
+.pydevproject
+Simulation Environment/.project
+.vscode/settings.json
+Simulation Environment/.pydevproject
+src/__pycache__/action.cpython-36.pyc
+src/__pycache__/action.cpython-36.pyc
