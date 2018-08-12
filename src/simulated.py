@@ -65,21 +65,25 @@ class ActionQueue():
 		if len( self.queue ) == 0:
 			if DEBUG:
 				print("there are no items in the action queue")
-				return
+			pass
 		else:
+			self.queue[0].decrement( )
 			if self.queue[0].get_ctr( ) == 0:
 				self.popAction( )
-				return
-			else:
-				self.queue[0].decrement( )
+
 
 	def test( self, test ):
+		"""
+		arbitrary function added for testing purposes
+		"""
 		print( test )
 
 	
 	
 	
 if __name__ == '__main__':
+	#unit test
+
 	errors = 0
 	#Create instance of ActionQueue
 	aq = ActionQueue( )
@@ -111,16 +115,10 @@ if __name__ == '__main__':
 		aq.update( ) 
 	if i + 1 != 3:
 		print(" update should have been called 3 times but was called", i + 1, "times" )
-	aq.update()
 
+	
 	#add multiple actions and ensure the queue is in the correct order
-	"""
-	Roman, should the action be removed from the queue once the function is called or should
-	it be called one additional time to be removed. If the latter is the case, should the update
-	function attempt to call the next function immediately or wait until the next time update is 
-	called
-	"""
-	assert(len( aq.queue ) == 0)
+	print( "The current length of the queue is" ,  len( aq.queue ) )
 	action1 = Action( aq.test, ["I should be first"] )
 	action1.set_ctr( 3 )
 	action2 = Action( aq.test, ["then me (:"] )
@@ -136,21 +134,15 @@ if __name__ == '__main__':
 	
 	while len( aq.queue ) != 0:
 		i = 0
-		while aq.queue[0].get_ctr() != 0:
+		while aq.queue[0].get_ctr( ) != 1:
 			i += 1
-			aq.update()
+			aq.update( )
+		i += 1
+		aq.update( )
 		print("update was called", i, "times")
-		aq.update()
-		print( "The current length of the queue is" ,  len( aq.queue ) )
 
-	#ensure that update() doesn't break if empty queue
+	# #ensure that update() doesn't break if empty queue
 	aq.update()
-
-	
-
-
-
-	print( "The current length of the queue is" ,  len( aq.queue ) )
 
 	print( "===================" )
 	print( "Unit test complete." )
