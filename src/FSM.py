@@ -7,6 +7,7 @@
 # Sending constants from page 32 fig. 32 from datasheet #
 #########################################################
 
+from simulated import Simulated
 import simulated
 from action import Action
 
@@ -25,6 +26,9 @@ TX_SHR_SEND_TIME = 135
 TX_PHR_SEND_CURRENT = 48
 TX_PHR_SEND_TIME = 1.33  #TIME PER BYTE OF INFO SENT
 
+DEBUG = True
+ 
+
 
 class State():
     def __init__(self, physical_data):
@@ -34,32 +38,35 @@ class State():
         return self.physical_data[param](self.physical_data)
 
 
-class Device():
+class Device(Simulated):
     def __init__(self, available_states, initial_state, physical_data):
+        super(Device, self).__init__()
         self.available_states = available_states
         self.initial_state = initial_state
         self.dev_state = initial_state
         self.physical_data = physical_data
-        self.next_states = self.getAvailableNextStates()
+        self.next_states = []
+        self.getAvailableNextStates()
         
 
-    def __setState(self, state):
-        dev_state = state
+    def setState(self, state):
+        self.dev_state = state
 
     def getState(self):
-        return dev_state
+        return self.dev_state
 
     def getAvailableNextStates(self):
-        next_states = available_states[dev_state]
+        self.next_states =  self.available_states[self.dev_state]
 
-    def setNextState(state):
-        for next in next_state:
-            if state in next: 
-                aq.addToQueue(Action(__setState, [state]))
+    def setNextState(self, state):
+        for next in self.next_states:
+            if state in next:
+                super().addAction(self.setState, [state])
+                super().update()
                 break
 
     def getParam(self, param):
-        return self.physical_data[param]()
+        return self.physical_data[param](physical_data, self.dev_state.physical_data)
     
         
 
@@ -119,13 +126,39 @@ def getCurrent(physical_data):
 def getTime(physical_data):
     return 'time'
 
+def getBattery(dev_data, state_data):
+    return battlife - state_data['current'](state_data)
+
+STATE_1 = State({'current' : getCurrent, 'time' : getTime, 'state' : 1})
+STATE_2 = State({'current' : getCurrent, 'time' : getTime, 'state' : 2})
+STATE_3 = State({'current' : getCurrent, 'time' : getTime, 'state' : 3})
+STATE_4 = State({'current' : getCurrent, 'time' : getTime, 'state' : 4})
+
+INITIAL_STATE = STATE_1
+
+DEVICE_DATA = {'batt_life' : getBattery}
+AVAILABLE_STATES = {STATE_1 : [(STATE_2 , 4)] , STATE_2 : [(STATE_3 , 5) , (STATE_4 , 6)] , STATE_3 : [(STATE_3 , 1) , (STATE_4 , 8)] , STATE_4 : [(STATE_1 , 12)]}
+
 if __name__ == "__main__":
-    data = {'current' : getCurrent, 'time' : getTime}
-    aq = simulated.ActionQueue()
-    s = State(data)
-    print(s.getParam('current'))
-    device = Device(
+    battlife = 1000
+    device = Device(AVAILABLE_STATES, INITIAL_STATE, DEVICE_DATA)
     
+    #checking state transitions to make sure they work
+    print(device.next_states)
+    device.setNextState(STATE_2)
+    device.getAvailableNextStates()
+    print(device.next_states)
+    device.setNextState(STATE_3)
+    device.getAvailableNextStates()
+    print(device.next_states)
+    device.setNextState(STATE_3)
+    device.getAvailableNextStates()
+    print(device.next_states)
+    device.setNextState(STATE_1)
+    device.getAvailableNextStates()
+    print(device.next_states)
+
+    #    
             
 
 
