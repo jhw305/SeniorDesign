@@ -1,0 +1,29 @@
+Documentation (Tanner)
+- each person docs their own code using
+Doxygen formatting
+- Tanner will push an example
+Error checking
+- specify return types, arg types, and be sure
+to check all arguments with assertions
+Top level unit test (Roman)
+- Delay until after everyone has finished code
+- Regression test of sim env that runs before you're able
+to push to Github
+Build systems (Roman)
+- set up __init__.py so whole directory is a package
+Jesse simenv (Jesse)
+- abstract class for hub with the table and such
+- calculate error with hub table and simenv table
+Chandler: physical_data for the device class should receive physical_data from device class and physical_data from current state
+
+Misc.
+- take note of the error in the table in the manual
+pg.15 of the DW1000 datasheet
+- algorithms should be targeting two things:
+1) low error rates
+2) system lifetime
+Requirements vary depending on the application. Should discuss at next meeting.
+Probably want a system that can work in a variety of applications. Just set different
+parameters.
+Maybe don't use return time of flight for better accuracy and do something based
+on signal power decay.
