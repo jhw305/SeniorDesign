@@ -127,7 +127,7 @@ def getTime(physical_data):
     return 'time'
 
 def getBattery(dev_data, state_data):
-    return battlife - state_data['current'](state_data)
+    battlife = battlife - state_data['current'](state_data)
 
 STATE_1 = State({'current' : getCurrent, 'time' : getTime, 'state' : 1})
 STATE_2 = State({'current' : getCurrent, 'time' : getTime, 'state' : 2})
