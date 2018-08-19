@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 #No device class, code does not run
 '''
 Things to consider:
@@ -12,6 +14,7 @@ Things to consider:
 '''
 
 from simulated import Simulated
+from FSM import Device
 
 class SimulationEnvironment():
     def __init__(self, mapPeriod : int, anchorCount : int, anchorDataList : list):
@@ -50,7 +53,6 @@ class SimulationEnvironment():
             return True
         else:
             return False
-        
 
 class Hub(Simulated):
     def __init__(self, simEnv, mapPeriod: int, time : int, anchorCount : int, anchorDataList : list):
@@ -61,6 +63,10 @@ class Hub(Simulated):
         self.nodes = []
         self.mapPeriod = mapPeriod #How much time inbetween mappings, starting at mapPeriod defined here
         self.nodeMap = []
+
+    def mainloop( self, simlist: list ) :
+        # TODO
+        pass
 
     def update(time : int):
         self.time = time
@@ -98,37 +104,7 @@ class Hub(Simulated):
 
     def triliterate():
         pass
-            
-'''
-class Device(Simulated):
-    def __init__(self, simEnv, time : int, ID : int, coordinates : list):
-        super()
-        self.simEnv = simEnv
-        self.time = time
-        self.ID = ID
-        self.x = coordinates[0]
-        self.y = coordinates[1]
-        self.z = coordinates[2]
-
-    def getID():
-        return self.ID
-
-    def pingNode(node): #Anchor oeratorion
-        super().addAction(sendSignalID, [node.getID()])
-        super().addAction(waitForResponse, [node.getID()])
-
-    def sendSignalID(ID : int):
-        self.simEnv.sendSignalID(self.ID, ID)
-
-    #Temporary functionality
-    def waitForResponse(ID : int):
-        if (not self.simEnv.checkAndDeleteSignal(self.ID, ID)):
-            super().addAction(waitForResponse, [node.getID()])
-
-'''        
-
                           
-
 if __name__ == '__main__':
     simEnv = SimulationEnvironment(mapPeriod = 500, anchorCount = 4, anchorDataList = [[0,0,0],
                                                                                        [0,0,10],
@@ -137,4 +113,3 @@ if __name__ == '__main__':
     simEnv.addNode([3, 40, 19])
     simEnv.addNode([4, 40, 22])
     simEnv.addNode([3, 37, 4])
-    
