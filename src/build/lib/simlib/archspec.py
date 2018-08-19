@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+"""@package Architecture Specification
+This module presents the simulation environment with the types of the hub, nodes, and
+anchors.
+"""
+
 #############
 ## Imports ##
 #############
@@ -13,54 +18,74 @@ class ArchSpec :
 	Architecture specification
 	Defines what classes to use for hub, anchors, and nodes.
 	"""
-	
 	# Constructors
 
-	def __init__( self , hubclass : type , anchorclass : type , nodeclass : type , anchor_separation : int = 0 , anchor_to_hub_distance : int = 0 ) :
+	"""
+	The default constructor
+	@param hubclass The type of the central hub
+	@param anchorclass The type of the anchor
+	@param nodeclass The type of the node
+	"""
+	def __init__( self , hubclass : type , anchorclass : type , nodeclass : type ) -> None :
 		self.set_hubclass( hubclass )
 		self.set_anchorclass( anchorclass )
 		self.set_nodeclass( nodeclass )
-		self.set_anchor_separation( anchor_separation )
-		self.set_anchor_to_hub_distance( anchor_to_hub_distance )
 
 	# Getter methods
 
-	def get_anchor_separation( self ) :
-		return self.__anchor_separation
-
-	def get_anchor_to_hub_distance( self ) :
-		return self.__anchor_to_hub_distance
-
-	def get_hubclass( self ) :
+	"""
+	Returns the type of the central hub
+	"""
+	def get_hubclass( self ) -> type :
 		return self.__hubclass
 
-	def get_anchorclass( self ) :
+	"""
+	Returns the type of the anchor
+	"""
+	def get_anchorclass( self ) -> type :
 		return self.__anchorclass
 
-	def get_nodeclass( self ) :
+	"""
+	Returns the type of the node
+	"""
+	def get_nodeclass( self ) -> type :
 		return self.__nodeclass
 
 	# Setter methods
 
-	def set_anchor_separation( self , anchor_separation : int ) :
-		assert anchor_separation >= 0
-		self.__anchor_separation = anchor_separation
-
-	def set_anchor_to_hub_distance( self , anchor_to_hub_distance : int ) :
-		assert anchor_to_hub_distance >= 0
-		self.__anchor_to_hub_distance = anchor_to_hub_distance
-
-	def set_hubclass( self , hubclass : type ) :
+	"""
+	Assigns the type of the hub. Checks whether the type inherits Simulated.
+	@param hubclass Type of the central hub
+	"""
+	def set_hubclass( self , hubclass : type ) -> None :
 		assert issubclass( hubclass , simulated.Simulated )
 		self.__hubclass = hubclass
 
-	def set_anchorclass( self , anchorclass : type ) :
+	"""
+	Assigns the type of the anchor. Checks whether the type inherits Simulated.
+	@param anchorclass Type of the central anchor
+	"""
+	def set_anchorclass( self , anchorclass : type ) -> None :
 		assert issubclass( anchorclass , simulated.Simulated )
 		self.__anchorclass = anchorclass
 
-	def set_nodeclass( self , nodeclass : type ) :
+	"""
+	Assigns the type of the node. Checks whether the type inherits Simulated.
+	@param nodeclass Type of the central node
+	"""
+	def set_nodeclass( self , nodeclass : type ) -> None :
 		assert issubclass( nodeclass , simulated.Simulated )
 		self.__nodeclass = nodeclass
+
+	""" @var __hubclass
+	The type of the central hub
+	"""
+	""" @var __anchorclass
+	The type of the anchors
+	"""
+	""" @var __nodeclass
+	The type of the nodes
+	"""
 
 if __name__ == "__main__" :
 

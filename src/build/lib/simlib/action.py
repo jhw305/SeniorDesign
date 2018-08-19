@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
-# Note: Only currently supports Python3
+"""@package Action
+This module defines the Action object, which is used, together with the ActionQueue class,
+to implement delayed function calls.
+"""
 
-###########
-## TODOs ##
-###########
-# Should decrement return the result of calling the function or just call the function?
-# Should we build support for other Python versions?
+# Note: Only currently supports Python3
 
 #############
 ## Imports ##
@@ -26,31 +25,30 @@ class Action :
 	
 	# Constructors
 	
-	def __init__( self , fn_to_be_called : types.FunctionType , fn_arg_list : list  , ctr_val : int = 0 ) :
+	def __init__( self , fn_to_be_called : types.FunctionType , fn_arg_list : list  , ctr_val : int = 0 ) -> None :
 		"""
 		Default constructor
-		
-		Mandatory Arguments:
-		- Function to be called
-		- Array of function arguments
-		Optional Arguments:
-		- Counter value (defaulted to 0)
-		
 		The number of arguments is checked. It is fn_to_be_called's responsibility
 		to check the types of the arguments.
+
+		@param fn_to_be_called Function to be called (mandatory)
+		@param fn_arg_list List of function arguments (mandatory)
+		@param ctr_val Counter value (default to 0; optional)
 		"""
 		self.set_fn( fn_to_be_called , fn_arg_list )
 		self.set_ctr( ctr_val )
 
 	# Useful methods
 
-	def decrement( self , n : int = 1 ) :
+	def decrement( self , n : int = 1 ) -> None :
 		"""
 		Decrement the counter by n, defaulted to 1.
 		If the counter should be 0 or lower, it will not drop below 0.
 		Instead, call the function with the associated arguments and
 		set the counter to 0.
+		@param n The amount by which the counter is decremented
 		"""
+		assert n >= 0
 		self.__ctr_val -= n
 		if self.__ctr_val <= 0 :
 			self.__ctr_val = 0
@@ -58,37 +56,40 @@ class Action :
 
 	# Setter methods
 
-	def set_fn( self , fn_to_be_called : types.FunctionType , fn_arg_list : list ) :
+	def set_fn( self , fn_to_be_called : types.FunctionType , fn_arg_list : list ) -> None :
 		"""
 		Assigned function to be called and the argument list.
 		Number of args is checked. fn_to_be_called will need to check types of args.
+		@param fn_to_be_called Function to be called
+		@param fn_arg_list List of arguments passed to fn_to_be_called
 		"""
 		assert len( signature( fn_to_be_called ).parameters ) == len( fn_arg_list )
 		self.__fn_to_be_called = fn_to_be_called
 		self.__fn_arg_list = fn_arg_list
 
-	def set_ctr( self , ctr_val : int ) :
+	def set_ctr( self , ctr_val : int ) -> None :
 		"""
-		Checks that ctr_val is 0 or greater.
+		Checks that ctr_val is 0 or greater, and sets the counter value accordingly.
+		@param ctr_val The new counter value
 		"""
 		assert ctr_val >= 0
 		self.__ctr_val = ctr_val
 
 	# Getter methods
 
-	def get_fn( self ) :
+	def get_fn( self ) -> types.FunctionType :
 		"""
 		Returns the function associated with this action.
 		"""
 		return self.__fn_to_be_called
 
-	def get_args( self ) :
+	def get_args( self ) -> list :
 		"""
 		Returns the function args associated with this action.
 		"""
 		return self.__fn_arg_list
 
-	def get_ctr( self ) :
+	def get_ctr( self ) -> int :
 		"""
 		Returns the counter value associated with this action.
 		"""
