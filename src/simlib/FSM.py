@@ -1,10 +1,12 @@
+#!/usr/bin/env python3
+
 ###################################################################################
 # TIME WILL BE IN MICROSECONDS, CURRENT WILL BE IN MILLIAMPS                      #
 # The -10000 is a placeholder due to me being unable to find the values for each  #
 # state in either the datasheet or manual.                                        #
 ###################################################################################
 from simulated import Simulated
-from abc import ABC
+from abc import ABC , abstractmethod
 import simulated
 from action import Action
 
@@ -52,7 +54,6 @@ class Device(Simulated , ABC):
     def __init__(self, available_states : dict, initial_state : State, physical_data : dict):
         Simulated.__init__(self)
         ABC.__init__(self)
-       # super(Device, self).__init__()
         self.available_states = available_states
         self.initial_state = initial_state
         self.dev_state = initial_state
@@ -100,71 +101,75 @@ class Device(Simulated , ABC):
         """
         return self.physical_data[param](physical_data, self.dev_state.physical_data)
 
-    def mainloop(self, simlist):
-        pass
-
-#####################################################################
-# This is dumb but i cant think of a way to do this while making it #
-# general to each device. I won't be adding comments to these       #
-# functions because they will be replaced when a better solution    #
-# is found.                                                         #
-#####################################################################
-
-def getOffCurrent(physical_data):
-    return 0
-
-def getDeepSleepCurrent(physical_data):
-    return 0.00005
-
-def getSleepCurrent(physical_data):
-    return 0.001
-
-def getInitCurrent(physical_data):
-    return 4
-
-def getIdleCurrent(physical_data):
-    return 18
-
-def getRXCurrent(physical_data):
-    return -10000
-
-def getTXCurrent(physical_data):
-    return -10000
-
-
-def getTime(physical_data):
-    return 'time'
-
-def getBattery(dev_data, state_data):
-    battlife = battlife - state_data['current'](state_data)
-
-######################################################################################
-# FSM for the DW1000, includes states, thier delays, and the current for each state. # 
-######################################################################################
-    
-OFF_STATE = State({'current' : getOffCurrent, 'time' : getTime, 'state' : 'off_state'})
-DEEPSLEEP_STATE = State({'current' : getDeepSleepCurrent, 'time' : getTime, 'state' : 'deepsleep_state'})
-SLEEP_STATE = State({'current' : getSleepCurrent, 'time' : getTime, 'state' : 'sleep_state'})
-INIT_STATE = State({'current' : getInitCurrent, 'time' : getTime, 'state' : 'init_state'})
-IDLE_STATE = State({'current' : getIdleCurrent, 'time' : getTime, 'state' : 'idle_state'})
-RX_STATE = State({'current' : getRXCurrent, 'time' : getTime, 'state' : 'rx_state'})
-TX_STATE = State({'current' : getTXCurrent, 'time' : getTime, 'state' : 'tx_state'})
-
-INITIAL_STATE = OFF_STATE
-DEVICE_DATA = {'batt_life' : getBattery}
-
-AVAILABLE_STATES = {OFF_STATE : [(INIT_STATE, 3000)],
-                    DEEPSLEEP_STATE : [(INIT_STATE, 3000)],
-                    SLEEP_STATE : [(INIT_STATE, 3000)],
-                    INIT_STATE : [(IDLE_STATE, 5)],
-                    IDLE_STATE : [(RX_STATE, 0) , (TX_STATE, 0)],
-                    RX_STATE : [(IDLE_STATE, -10000) , (SLEEP_STATE, -10000) , (DEEPSLEEP_STATE, -10000)],
-                    TX_STATE : [(IDLE_STATE, -10000) , (SLEEP_STATE, -10000) , (DEEPSLEEP_STATE, -10000)]} 
-                    
 
 if __name__ == "__main__":
+
+    #####################################################################
+    # This is dumb but i cant think of a way to do this while making it #
+    # general to each device. I won't be adding comments to these       #
+    # functions because they will be replaced when a better solution    #
+    # is found.                                                         #
+    #####################################################################
+    
+    def getOffCurrent(physical_data):
+        return 0
+    
+    def getDeepSleepCurrent(physical_data):
+        return 0.00005
+    
+    def getSleepCurrent(physical_data):
+        return 0.001
+    
+    def getInitCurrent(physical_data):
+        return 4
+    
+    def getIdleCurrent(physical_data):
+        return 18
+    
+    def getRXCurrent(physical_data):
+        return -10000
+    
+    def getTXCurrent(physical_data):
+        return -10000
+    
+    def getTime(physical_data):
+        return 'time'
+    
+    def getBattery(dev_data, state_data):
+        battlife = battlife - state_data['current'](state_data)
+    
+    ######################################################################################
+    # FSM for the DW1000, includes states, thier delays, and the current for each state. # 
+    ######################################################################################
+        
+    OFF_STATE = State({'current' : getOffCurrent, 'time' : getTime, 'state' : 'off_state'})
+    DEEPSLEEP_STATE = State({'current' : getDeepSleepCurrent, 'time' : getTime, 'state' : 'deepsleep_state'})
+    SLEEP_STATE = State({'current' : getSleepCurrent, 'time' : getTime, 'state' : 'sleep_state'})
+    INIT_STATE = State({'current' : getInitCurrent, 'time' : getTime, 'state' : 'init_state'})
+    IDLE_STATE = State({'current' : getIdleCurrent, 'time' : getTime, 'state' : 'idle_state'})
+    RX_STATE = State({'current' : getRXCurrent, 'time' : getTime, 'state' : 'rx_state'})
+    TX_STATE = State({'current' : getTXCurrent, 'time' : getTime, 'state' : 'tx_state'})
+    
+    INITIAL_STATE = OFF_STATE
+    DEVICE_DATA = {'batt_life' : getBattery}
+    
+    AVAILABLE_STATES = {OFF_STATE : [(INIT_STATE, 3000)],
+                        DEEPSLEEP_STATE : [(INIT_STATE, 3000)],
+                        SLEEP_STATE : [(INIT_STATE, 3000)],
+                        INIT_STATE : [(IDLE_STATE, 5)],
+                        IDLE_STATE : [(RX_STATE, 0) , (TX_STATE, 0)],
+                        RX_STATE : [(IDLE_STATE, -10000) , (SLEEP_STATE, -10000) , (DEEPSLEEP_STATE, -10000)],
+                        TX_STATE : [(IDLE_STATE, -10000) , (SLEEP_STATE, -10000) , (DEEPSLEEP_STATE, -10000)]} 
+
+    class DW1000( Device ) :
+        def __init__(self, available_states : dict, initial_state : State, physical_data : dict) :
+            Device.__init__( self , available_states , initial_state , physical_data )
+        def __mainloop( self, simlist: list ) :
+                # TODO
+                pass
+                        
     battlife = 1000
-    device = Device(AVAILABLE_STATES, INITIAL_STATE, DEVICE_DATA)
+    device = DW1000(AVAILABLE_STATES, INITIAL_STATE, DEVICE_DATA)
     
     #checking state transitions to make sure they work
     print(device.next_states)
@@ -186,9 +191,3 @@ if __name__ == "__main__":
     print(device.next_states)
     print(device.getState().getParam('current'))
     #general states work correctly
-            
-
-
-
-
-

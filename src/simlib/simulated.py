@@ -4,7 +4,7 @@
 ## Imports ##
 #############
 import types
-from abc import ABC
+from abc import ABC , abstractmethod
 from action import Action
 DEBUG = True
 
@@ -17,18 +17,13 @@ class Simulated( ABC ) :
 	def __init__( self ):
 		self.actionQueue = ActionQueue( )
 
-	def addAction( self, fn_to_be_called : types.FunctionType, fn_arg_list : list, ctr_val : int = 0 ):
-		self.actionQueue.addToQueue(Action(fn_to_be_called, fn_arg_list))
-
-	def update( self ):
+	def run_timestep( self , simlist : list ):
+		__mainloop( simlist )
 		self.actionQueue.update( )
 
 	@abstractmethod
-	def mainloop( self, simlist: list ) -> int:
+	def __mainloop( self, simlist: list ) :
 		pass
-		
-                
-
 
 class ActionQueue():
 	"""
@@ -47,7 +42,7 @@ class ActionQueue():
 		try:
 			assert( isinstance( newAction, Action ) )
 		except:
-			print("simulated.adddToQueue (Please pass action to add to queue ( : )")
+			print("simulated.addToQueue (Please pass action to add to queue ( : )")
 			raise 
 
 		self.queue.append( newAction )
