@@ -2,13 +2,10 @@
 
 ###################################################################################
 # TIME WILL BE IN MICROSECONDS, CURRENT WILL BE IN MILLIAMPS                      #
-# The -10000 is a placeholder due to me being unable to find the values for each  #
-# state in either the datasheet or manual.                                        #
 ###################################################################################
-from simulated import Simulated
+from simlib.simulated import Simulated
 from abc import ABC , abstractmethod
-import simulated
-from action import Action
+from simlib.action import Action
 
 OSC_STARTUP_SEND_CURRENT = 3
 OSC_STARTUP_SEND_TIME = 2000

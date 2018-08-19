@@ -13,8 +13,8 @@ Things to consider:
 
 '''
 
-from simulated import Simulated
-from FSM import Device
+from simlib.simulated import Simulated
+from simlib.FSM import Device
 
 class SimulationEnvironment():
     def __init__(self, mapPeriod : int, anchorCount : int, anchorDataList : list):
