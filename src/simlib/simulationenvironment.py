@@ -13,10 +13,14 @@ Things to consider:
 
 '''
 
-from archspec import ArchSpec
-from hub import Hub
-from anchor import Anchor
-from node import Node
+from simlib.archspec import ArchSpec
+from simlib.hub import Hub
+from simlib.anchor import Anchor
+from simlib.node import Node
+from simlib.FSM import State
+from simlib.DW1000_Anchor_1 import DW1000_Anchor_1
+from simlib.DW1000_Node_1 import DW1000_Node_1
+from simlib.ExampleHub import ExampleHub
 
 class SimulationEnvironment():
     def __init__(self):
@@ -27,16 +31,16 @@ class SimulationEnvironment():
         self.nextID = 0
         self.signalList = []
 
-    def createHub(self, algorithm : "function") -> "Hub":
+    def createHub(self, archSpec : "ArchSpec") -> "Hub":
         ''' Creates a hub, adds it to simEnv list of hubs, returns hub '''
-        hub = Hub(algorithm)
+        hub = archSpec.get_hubclass()()
         self.hubs.append(Hub)
         return hub
 
     def createNode(self, xPos : int, yPos : int, zPos: int,
-                   xVel : int, yVel : int, zVel: int) -> "Node":
+                   xVel : int, yVel : int, zVel: int, archSpec : "ArchSpec") -> "Node":
         ''' Creates a node, adds it to simEnv list of nodes, returns node '''
-        node = Node(self.nextID, xPos, yPos, zPos, xVel, yVel, zVel, self.signalList)
+        node = archSpec.get_nodeclass()(self.nextID, xPos, yPos, zPos, xVel, yVel, zVel, self.signalList)
         self.nextID += 1
         self.nodes.append(node)
         return node
@@ -62,9 +66,9 @@ class SimulationEnvironment():
                 dissassociateNode(hub, node)
         self.nodes.remove(node)
 
-    def createAnchor(self, xPos : int, yPos : int, zPos: int) -> "Anchor":
+    def createAnchor(self, xPos : int, yPos : int, zPos: int, archSpec : "ArchSpec") -> "Anchor":
         ''' Creates an anchor, adds it to simEnv list of anchors, returns anchor '''
-        anchor = Anchor(self.nextID, xPos, yPos, zPos, self.signalList)
+        anchor = archSpec.get_anchorclass()(self.nextID, xPos, yPos, zPos, self.signalList)
         self.nextID += 1
         self.anchors.append(anchor)
         return anchor
@@ -90,25 +94,33 @@ class SimulationEnvironment():
                 dissasociateAnchor(hub, anchor)
         self.anchors.remove(anchor)
 
-    def mainloop():
-        pass
-    
-def superSmartTrilaterationAlgorithm(mapDict : dict, nodeEntry : int) -> list:
-    return [0, 0, 0]
+    def mainloop(self):
+        self.time += 1
+        for hub in self.hubs:
+            hub.mainloop()
+        for anchor in self.anchors:
+            anchor.mainloop()
+        for node in self.nodes:
+            node.mainloop()
 
 if __name__ == '__main__':
     # Unit Test
     errors = 0
 
-    archspec = ArchSpec(Hub, Anchor, Node)
-    simEnv = SimulationEnvironment()
-    hub = simEnv.createHub(superSmartTrilaterationAlgorithm)
-    for i in range(0,4):
-        anchor = simEnv.createAnchor(0, 0, i)
-        simEnv.associateAnchor(hub, anchor)
-    node = simEnv.createNode(3, 3, 3, 0, 0, 0)
-    hub.getNodePosition(node)
-    while(1):
-        simEnv.mainloop()
-        
+    #Create 4 anchors and 1 node, attempt to get that node's position
     
+    archSpec = ArchSpec(ExampleHub, DW1000_Anchor_1, DW1000_Node_1)
+    simEnv = SimulationEnvironment()
+    hub = simEnv.createHub(archSpec)
+    for i in range(0,4):
+        anchor = simEnv.createAnchor(0, 0, i, archSpec)
+        simEnv.associateAnchor(hub, anchor)
+    node = simEnv.createNode(3, 3, 3, 0, 0, 0, archSpec)
+    #Will not generate an output while mainloop() is not implemented
+    hub.getNodePosition(node)
+
+    assert(simEnv.nodes[0].xPos == 3)
+    assert(simEnv.anchors[0].zPos == 0)
+    
+    
+

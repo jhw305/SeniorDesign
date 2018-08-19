@@ -48,6 +48,10 @@ class Device(Simulated , ABC):
     physical data, and available states used to accurately
     model the DW1000 or other like devices. 
     """
+    def __init__(self):
+        Simulated.__init__(self)
+        ABC.__init__(self)
+
     def __init__(self, available_states : dict, initial_state : State, physical_data : dict):
         Simulated.__init__(self)
         ABC.__init__(self)
@@ -56,16 +60,15 @@ class Device(Simulated , ABC):
         self.dev_state = initial_state
         self.physical_data = physical_data
         self.next_states = []
-        self.__getAvailableNextStates()
+        self.getAvailableNextStates()
         
-
     def __setState(self, state : State):
         """
         Sets the current state (dev_state) to the state provided.
         This is only called through setNextState.
         """
         self.dev_state = state
-        self.__getAvailableNextStates( )
+        self.getAvailableNextStates( )
 
     def getState(self) -> State:
         """
@@ -73,7 +76,7 @@ class Device(Simulated , ABC):
         """
         return self.dev_state
 
-    def __getAvailableNextStates(self):
+    def getAvailableNextStates(self):
         """
         Gets the possible next states from the FSM
         and assigns them to the next_states.

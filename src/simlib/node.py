@@ -2,8 +2,9 @@
 # Author: Jesse Campbell
 # Date Created: August 18 2018
 
-from simulated import Simulated
-from FSM import Device
+from simlib.simulated import Simulated
+from simlib.FSM import Device
+from abc import ABC
 
 class Node(Device):
     def __init__(self, ID : int, xPos : int, yPos : int, zPos : int,
@@ -37,7 +38,7 @@ class Node(Device):
         return 0
 
     def addAction(self, function : "Function", args : list, ctr : int = 0):
-        self.actionQueue.addAction(function, args, ctr)
+        self.actionQueue.addToQueue(function, args, ctr)
 
     def prependAction(self, function : "Function", args : list, ctr : int = 0):
         self.actionQueueprependAction(function, args, ctr)

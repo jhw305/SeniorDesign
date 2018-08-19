@@ -2,13 +2,15 @@
 # Author: Jesse Campbell
 # Date Created: August 18 2018
 
-from simulated import Simulated
-from anchor import Anchor
-from node import Node
+from simlib.simulated import Simulated
+from simlib.anchor import Anchor
+from simlib.node import Node
+from simlib.action import Action
+from abc import ABC
 
-class Hub(Simulated):
-    def __init__(self, algorithm):
-        #super().__init__()
+class Hub(Simulated, ABC):
+    def __init__(self):
+        super().__init__()
         self.time = 0
         self.anchors = list()
         self.nodes = list()
@@ -16,9 +18,8 @@ class Hub(Simulated):
         self.map = {}
         self.nodePositions = {}
         #A function pointer that gets called in Hub.triliterate
-        self.algorithm = algorithm
 
-    def setTime(time : int):
+    def setTime(self, time : int):
         self.time = time
 
     def containsAnchor(self, anchor : "Anchor") -> bool:
@@ -111,9 +112,9 @@ class Hub(Simulated):
         for anchor in self.anchors:
             anchor.requestPing(node)
             self.addAction(self.mapAnchorToNode, [anchor, node])
-        self.addAction(self.triliterate, [])
+        self.addAction(self.triliterateNode, [node])
 
-    def mapAnchorAndNode(self, *args : "Anchor, Node"):
+    def mapAnchorToNode(self, anchor : "Anchor", node : "Node"):
         '''
         Always called after an requestPing is called by an anchor. Adds itself to the top of the actionQueue
         if the given anchor has not received a response yet.
@@ -149,11 +150,11 @@ class Hub(Simulated):
             ''' Puts itself back infront of the action queue '''
             self.prependAction(self.mapAnchorToNode, [anchor, node])
         
-    def triliterateNode(node : "Node"):
+    def triliterateNode(self, node : "Node"):
         '''
         Calls the triliteration alogrithm passed to the Constructor, passing a dictionary of tuples and intergers
         '''
-        position = self.algorithm(self.map, self.nodes.index(node))
+        position = self.algorithm(self.map, self.nodes.index(node), len(self.anchors))
         self.nodePosition[node.getID()] = position
 
     def generateCompleteMap(self):
@@ -164,20 +165,10 @@ class Hub(Simulated):
             self.getNodePosition(node)
 
     def addAction(self, function : "Function", args : list, ctr : int = 0):
-        self.actionQueue.addAction(function, args, ctr)
+        self.actionQueue.addToQueue(Action(function, args, ctr_val = ctr))
 
     def prependAction(self, function : "Function", args : list, ctr : int = 0):
-        self.actionQueue.prependAction(function, args, ctr)
-
-
-    def mainloop():
-        pass
-    '''
-        Left blank because:
-            Its unclear how to write this that isn't specific to an algorithm
-            Unclear what the arguments are supposed to be for super().mainloop
-    '''
-
+        self.actionQueue.prependAction(Action(function, args, ctr_val = ctr))
 
 if __name__=='__main__':
     #unit tests?

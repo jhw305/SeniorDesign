@@ -2,14 +2,16 @@
 # Author: Jesse Campbell
 # Date Created: August 18 2018
 
-from simulated import Simulated
-from FSM import Device, AVAILABLE_STATES, INITIAL_STATE, DEVICE_DATA
-from node import Node
+from simlib.simulated import Simulated
+from simlib.FSM import Device
+from simlib.node import Node
+from simlib.action import Action
+from abc import ABC
 
-class Anchor(Device):
+class Anchor(Device, ABC):
     def __init__(self, ID : int, xPos : int, yPos : int, zPos : int,
                  signalList: list):
-        super().__init__(AVAILABLE_STATES, INITIAL_STATE, DEVICE_DATA)
+        super().__init__()
         self.time = 0
         self.ID = ID
         self.xPos = xPos
@@ -74,12 +76,9 @@ class Anchor(Device):
             self.prependAction(self.waitForReply, node)
 
     def addAction(self, function : "Function", args : list, ctr : int = 0):
-        self.actionQueue.addAction(function, args, ctr)
+        self.actionQueue.addToQueue(Action(function, args, ctr_val = ctr))
 
     def prependAction(self, function : "Function", args : list, ctr : int = 0):
-        self.actionQueue.prependAction(function, args, ctr)
+        self.actionQueue.prependAction(Action(function, args, ctr_val = ctr))
             
-'''
-    def mainloop():
-        pass
-'''
+
