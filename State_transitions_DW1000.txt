@@ -1,0 +1,28 @@
+FROM CHART ON PG 28 OF THE DATASHEET
+
+OFF ->
+		INIT, 3ms, 0A
+		
+DEEPSLEEP -> 
+		INIT, 3ms, 50nA
+
+SLEEP ->
+		INIT, 3ms, 1uA
+		
+INIT -> 
+		IDLE, 5us, 4mA
+		
+IDLE -> 
+		RX, 0s, 18mA (NO DC) 12mA (WITH DC)
+		TX, 0s, 18mA (NO DC) 12mA (WITH DC)
+		
+RX -> 
+		IDLE, ???, ???
+		SLEEP, ???, ???
+		DEEPSLEEP, ???, ???
+		
+TX ->
+		IDLE, ???, ???
+		SLEEP, ???, ???
+		DEEPSLEEP, ???, ???
+		
