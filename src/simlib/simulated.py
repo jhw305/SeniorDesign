@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 
+"""@package Simulated 
+The simulated module contains the Simulated class that is an abstract class
+that generalizes the notions fo a device, central hub, anchor and node. It 
+also contains the ActionQueue class that is resposuble for keeping track of
+the current stated of the actions that are waiting to be executed (time until
+execution).
+"""
+
 #############
 ## Imports ##
 #############
@@ -37,7 +45,7 @@ class ActionQueue():
 		
 	def addToQueue( self, newAction : Action ):
 		"""
-		assures action was passed in to be added to the queue
+		ensures action was passed in to be added to the queue
 		if not, it will fail and return 
 		"""
 		
@@ -75,7 +83,7 @@ class ActionQueue():
 
 	def test( self, test ):
 		"""
-		arbitrary function added for testing purposes
+		Arbitrary function added for unit test. 
 		"""
 		print( test )
 
