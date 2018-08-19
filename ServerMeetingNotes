@@ -1,0 +1,28 @@
+HW Right Now:
+- analog discovery
+- 6 boards
+- 8 modules
+
+This weekend, Jason and Tanner can set up a server.
+Raspbian
+- Analog Discovery software
+- AD connected via USB
+- DW1000 software on RPi
+Port forwarding - Chandler is the expert. Test the connection over the internet.
+User accounts for each of us
+	- sudo access for everyone
+Use same image to set up more servers
+
+For Chandler:
+- Take out DeviceFSM once you're done with everything
+- Keep working on the DW1000's FSM
+- Figure out the best solution for the physical_data dictionary for now. Roman'll probably
+refactor it next week.
+
+Responsibilities for Roman:
+- Get rid of update()
+- Keep mainloop as abstract method
+- When you implement mainloop, it's your responsibility to update actionqueue
+- Figure out how the sim env gets device to change state
+
+- Tell Jesse to use fn ptr
