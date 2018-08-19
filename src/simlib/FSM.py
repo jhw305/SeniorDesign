@@ -81,7 +81,7 @@ class Device(Simulated , ABC):
         Gets the possible next states from the FSM
         and assigns them to the next_states.
         """
-        self.next_states =  self.available_states[self.dev_state]
+        self.next_states = self.available_states[self.dev_state]
 
     def setNextState(self, state : State):
         """
@@ -90,8 +90,8 @@ class Device(Simulated , ABC):
         set the state.
         """
         for next in self.next_states:
-            if state in next:
-                self.actionQueue.addToQueue( Action( self.__setState, [ state ] ) )
+            if state == next[ 0 ] :
+                self.actionQueue.addToQueue( Action( self.__setState, [ state ] , next[ 1 ] ) )
                 break
 
     def getParam(self, param : str) -> 'float' :
@@ -158,8 +158,8 @@ if __name__ == "__main__":
                         SLEEP_STATE : [(INIT_STATE, 3000)],
                         INIT_STATE : [(IDLE_STATE, 5)],
                         IDLE_STATE : [(RX_STATE, 0) , (TX_STATE, 0)],
-                        RX_STATE : [(IDLE_STATE, -10000) , (SLEEP_STATE, -10000) , (DEEPSLEEP_STATE, -10000)],
-                        TX_STATE : [(IDLE_STATE, -10000) , (SLEEP_STATE, -10000) , (DEEPSLEEP_STATE, -10000)]} 
+                        RX_STATE : [(IDLE_STATE, 0) , (SLEEP_STATE, 0) , (DEEPSLEEP_STATE, 0)],
+                        TX_STATE : [(IDLE_STATE, 0) , (SLEEP_STATE, 0) , (DEEPSLEEP_STATE, 0)]} 
 
     class DW1000( Device ) :
         def __init__(self, available_states : dict, initial_state : State, physical_data : dict) :
@@ -179,26 +179,22 @@ if __name__ == "__main__":
         print( "OFF_STATE current is incorrect! (Read: " + str( my_current ) + ")" )
         errors += 1
     device.setNextState(INIT_STATE)
+    for i in range( 0 , 3000 ) :
+	    device.run_timestep( simlist )
     my_current = device.getState().getParam('current')
-    device.run_timestep( simlist )
-    if my_current != 4.0 :
-        print( "OFF_STATE current is incorrect! (Read: " + str( my_current ) + ")" )
-        errors += 1
-    device.setNextState(IDLE_STATE)
-    my_current = device.getState().getParam('current')
-    device.run_timestep( simlist )
-    if my_current != 18.0 :
-        print( "IDLE_STATE current is incorrect! (Read: " + str( my_current ) + ")" )
-        errors += 1
-    device.setNextState(INIT_STATE)
-    my_current = device.getState().getParam('current')
-    device.run_timestep( simlist )
     if my_current != 4.0 :
         print( "INIT_STATE current is incorrect! (Read: " + str( my_current ) + ")" )
         errors += 1
-    device.setNextState(RX_STATE)
+    device.setNextState(IDLE_STATE)
+    for i in range( 0 , 5 ) :
+	    device.run_timestep( simlist )
     my_current = device.getState().getParam('current')
+    if my_current != 18.0 :
+        print( "IDLE_STATE current is incorrect! (Read: " + str( my_current ) + ")" )
+        errors += 1
+    device.setNextState( RX_STATE )
     device.run_timestep( simlist )
+    my_current = device.getState().getParam('current')
     if my_current != -10000.0 :
         print( "RX_STATE current is incorrect! (Read: " + str( my_current ) + ")" )
         errors += 1
