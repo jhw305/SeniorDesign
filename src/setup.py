@@ -3,4 +3,4 @@
 from distutils.core import setup
 
 setup( name = 'SeniorDesignSimulator' ,
-       packages = [ "action" , "archspec" , "simulated" ] )
+       packages = [ "simlib" ] )

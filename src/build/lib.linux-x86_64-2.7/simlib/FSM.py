@@ -59,16 +59,15 @@ class Device(Simulated , ABC):
         self.dev_state = initial_state
         self.physical_data = physical_data
         self.next_states = []
-        self.__getAvailableNextStates()
+        self.getAvailableNextStates()
         
 
-    def __setState(self, state : State):
+    def setState(self, state : State):
         """
         Sets the current state (dev_state) to the state provided.
         This is only called through setNextState.
         """
         self.dev_state = state
-        self.__getAvailableNextStates( )
 
     def getState(self) -> State:
         """
@@ -76,7 +75,7 @@ class Device(Simulated , ABC):
         """
         return self.dev_state
 
-    def __getAvailableNextStates(self):
+    def getAvailableNextStates(self):
         """
         Gets the possible next states from the FSM
         and assigns them to the next_states.
@@ -91,10 +90,11 @@ class Device(Simulated , ABC):
         """
         for next in self.next_states:
             if state in next:
-                self.actionQueue.addToQueue( Action( self.__setState, [ state ] ) )
+                super().addAction(self.setState, [state])
+                super().update()
                 break
 
-    def getParam(self, param : str) -> 'float' :
+    def getParam(self, param : str) -> 'unknown':
         """
         Gets a piece of physical data for the device such as
         battery life. 
@@ -112,7 +112,7 @@ if __name__ == "__main__":
     #####################################################################
     
     def getOffCurrent(physical_data):
-        return 0.0
+        return 0
     
     def getDeepSleepCurrent(physical_data):
         return 0.00005
@@ -121,16 +121,16 @@ if __name__ == "__main__":
         return 0.001
     
     def getInitCurrent(physical_data):
-        return 4.0
+        return 4
     
     def getIdleCurrent(physical_data):
-        return 18.0
+        return 18
     
     def getRXCurrent(physical_data):
-        return -10000.0
+        return -10000
     
     def getTXCurrent(physical_data):
-        return -10000.0
+        return -10000
     
     def getTime(physical_data):
         return 'time'
@@ -164,7 +164,7 @@ if __name__ == "__main__":
     class DW1000( Device ) :
         def __init__(self, available_states : dict, initial_state : State, physical_data : dict) :
             Device.__init__( self , available_states , initial_state , physical_data )
-        def mainloop( self, simlist: list ) :
+        def __mainloop( self, simlist: list ) :
                 # TODO
                 pass
                         
@@ -172,34 +172,22 @@ if __name__ == "__main__":
     device = DW1000(AVAILABLE_STATES, INITIAL_STATE, DEVICE_DATA)
     
     #checking state transitions to make sure they work
-    errors = 0
-    simlist = [ ]
-    my_current = device.getState().getParam('current')
-    if my_current != 0.0 :
-        print( "OFF_STATE current is incorrect! (Read: " + str( my_current ) + ")" )
-        errors += 1
+    print(device.next_states)
+    print(device.getState().getParam('current'))
     device.setNextState(INIT_STATE)
-    my_current = device.getState().getParam('current')
-    device.run_timestep( simlist )
-    if my_current != 4.0 :
-        print( "OFF_STATE current is incorrect! (Read: " + str( my_current ) + ")" )
-        errors += 1
+    device.getAvailableNextStates()
+    print(device.next_states)
+    print(device.getState().getParam('current'))
     device.setNextState(IDLE_STATE)
-    my_current = device.getState().getParam('current')
-    device.run_timestep( simlist )
-    if my_current != 18.0 :
-        print( "IDLE_STATE current is incorrect! (Read: " + str( my_current ) + ")" )
-        errors += 1
+    device.getAvailableNextStates()
+    print(device.next_states)
+    print(device.getState().getParam('current'))
     device.setNextState(INIT_STATE)
-    my_current = device.getState().getParam('current')
-    device.run_timestep( simlist )
-    if my_current != 4.0 :
-        print( "INIT_STATE current is incorrect! (Read: " + str( my_current ) + ")" )
-        errors += 1
+    device.getAvailableNextStates()
+    print(device.next_states)
+    print(device.getState().getParam('current'))
     device.setNextState(RX_STATE)
-    my_current = device.getState().getParam('current')
-    device.run_timestep( simlist )
-    if my_current != -10000.0 :
-        print( "RX_STATE current is incorrect! (Read: " + str( my_current ) + ")" )
-        errors += 1
-    print( "Number of errors: " + str( errors ) )
+    device.getAvailableNextStates()
+    print(device.next_states)
+    print(device.getState().getParam('current'))
+    #general states work correctly

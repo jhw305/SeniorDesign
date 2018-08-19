@@ -17,15 +17,13 @@ class Simulated( ABC ) :
 	def __init__( self ):
 		self.actionQueue = ActionQueue( )
 
-	# Note: Should be protected method, but Python mangles
-	# names of __ methods, so you can't implement them in subclasses.
-	@abstractmethod
-	def mainloop( self, simlist: list ) :
-		pass
-
 	def run_timestep( self , simlist : list ):
-		self.mainloop( simlist )
+		__mainloop( simlist )
 		self.actionQueue.update( )
+
+	@abstractmethod
+	def __mainloop( self, simlist: list ) :
+		pass
 
 class ActionQueue():
 	"""
