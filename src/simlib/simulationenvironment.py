@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
-
-#No device class, code does not run
+# Document Name: SimulationEnvironment.py
+# Author: Jesse Campbell
+# Date Created: August 18 2018
 '''
 Things to consider:
    1 Actions with potentially no time requirement can be added to the action queue, and they should all be executed in the same
@@ -13,103 +13,102 @@ Things to consider:
 
 '''
 
-from simlib.simulated import Simulated
-from simlib.FSM import Device
+from archspec import ArchSpec
+from hub import Hub
+from anchor import Anchor
+from node import Node
 
 class SimulationEnvironment():
-    def __init__(self, mapPeriod : int, anchorCount : int, anchorDataList : list):
+    def __init__(self):
         self.time = 0
-        self.hub = Hub(self, mapPeriod, self.time, anchorCount, anchorDataList)
-        self.devices = self.hub.getAnchors()
-        self.nextID = len(self.devices)
+        self.hubs = list()
+        self.anchors = list()
+        self.nodes = list()
+        self.nextID = 0
         self.signalList = []
 
-    def update():
-        #Calls the update function of each device and the hub, increments time
-        self.time += 1
-        nodeMap = self.hub.update(self.time)
-        if (nodeMap):
-            analyze(nodeMap)
-        for device in devices:
-            device.update(self.time)
+    def createHub(self, algorithm : "function") -> "Hub":
+        ''' Creates a hub, adds it to simEnv list of hubs, returns hub '''
+        hub = Hub(algorithm)
+        self.hubs.append(Hub)
+        return hub
 
-    def addNode(self, coordinateList : list):
-        #Calls the Device class constructor!!!!!!!!!!!!!!!
-        newDevice = Device(self, self.time, self.nextID, coordinateList)
-        self.devices.append(newDevice)
-        self.hub.addNode(newDevice)
-
-    def analyze(self, nodeMap : list):
-        #Statistics I do not know how to do
-        print(nodeMap)
-
-    def sendSignalID(senderID : int, receiverID : int):
-        self.signalList.append((receiverID, senderID))
-
-    def checkAndDeleteSignal(receiverID: int, senderID : int):
-        if ((receiverID, senderID) in self.signalList):
-            self.signalList.remove((receiverID, senderID))
-            self.signalList.remove((senderID, receiverID))
-            return True
-        else:
-            return False
-
-class Hub(Simulated):
-    def __init__(self, simEnv, mapPeriod: int, time : int, anchorCount : int, anchorDataList : list):
-        super()
-        self.simEnv = simEnv
-        self.time = time
-        self.anchors = self.createAnchors(anchorCount, anchorDataList)
-        self.nodes = []
-        self.mapPeriod = mapPeriod #How much time inbetween mappings, starting at mapPeriod defined here
-        self.nodeMap = []
-
-    def mainloop( self, simlist: list ) :
-        # TODO
-        pass
-
-    def update(time : int):
-        self.time = time
-        #Temporary functionality; Waits until time MAPPING_INTERVAL
-        #and then generates a new map every time MAPPING_INTERVAL time has passed
-        if (self.mapPeriod % self.time == 0 and self.time >= self.mapPeriod):
-            super().addAction(createNodeMap, [])
-            
-        super.update()
-        
-    def getAnchors(self):
-        return self.anchors
-
-    def getSimEnv(self):
-        return self.simEnv
-    def addNode(self, node):
+    def createNode(self, xPos : int, yPos : int, zPos: int,
+                   xVel : int, yVel : int, zVel: int) -> "Node":
+        ''' Creates a node, adds it to simEnv list of nodes, returns node '''
+        node = Node(self.nextID, xPos, yPos, zPos, xVel, yVel, zVel, self.signalList)
+        self.nextID += 1
         self.nodes.append(node)
-    
-    def createAnchors(self, anchorCount : int, anchorDataList : list):
-        for ID in range(0, anchorCount):
-            #Calls the Device class constructor!!!!!!!!!!!!!!!
-            anchorList = []
-            anchorList.append(Device(self.simEnv, self.time, ID, anchorDataList[0]))
-        return anchorList
-            
-    def createNodeMap():
-        for node in self.nodes:
-            super().addAction(pingNode, [node])
-        super().addAction(triliterate, [])
-        
+        return node
 
-    def pingNode(node):
-        for anchor in self.anchors:
-            anchor.pingNode(node)
+    def getNodeByID(self, ID : int) -> "Node":
+        ''' Scans the simEnv's list of nodes and returns one with a matching ID '''
+        for node in nodes:
+            if (ID == node.ID):
+                return node
 
-    def triliterate():
+    def associateNode(self, hub : "Hub", node : "Node"):
+        ''' Adds the node to the Hub's list of nodes '''
+        hub.addNode(node)
+
+    def dissassociateNode(self, hub : "Hub", node : "Node"):
+        ''' Removes the node from the Hub's list of nodes '''
+        hub.removeNode(node)
+
+    def deleteNode(self, node : "Node"):
+        ''' Deletes the node, and dissassociates it from each relevant hubs '''
+        for hub in hubs:
+            if (hub.containsNode(node)):
+                dissassociateNode(hub, node)
+        self.nodes.remove(node)
+
+    def createAnchor(self, xPos : int, yPos : int, zPos: int) -> "Anchor":
+        ''' Creates an anchor, adds it to simEnv list of anchors, returns anchor '''
+        anchor = Anchor(self.nextID, xPos, yPos, zPos, self.signalList)
+        self.nextID += 1
+        self.anchors.append(anchor)
+        return anchor
+
+    def getAnchorByID(self, ID : int) -> "Anchor":
+        ''' Scans the simEnv's list of anchors and returns one with a matching ID '''
+        for anchor in anchors:
+            if (ID == anchor.ID):
+                return anchor
+
+    def associateAnchor(self, hub : "Hub", anchor : "Anchor"):
+        ''' Adds the anchor to the Hub's list of anchors '''
+        hub.addAnchor(anchor)
+
+    def dissassociateAnchor(hub : "Hub", anchor : "Anchor"):
+        ''' Removes the anchor from the Hub's list of anchors '''
+        hub.removeAnchor(anchor)
+
+    def deleteAnchor(self, anchor : "Anchor"):
+        ''' Deletes the anchor, and dissassociates it from each relevant hubs '''
+        for hub in hubs:
+            if (hub.containsAnchor(anchor)):
+                dissasociateAnchor(hub, anchor)
+        self.anchors.remove(anchor)
+
+    def mainloop():
         pass
-                          
+    
+def superSmartTrilaterationAlgorithm(mapDict : dict, nodeEntry : int) -> list:
+    return [0, 0, 0]
+
 if __name__ == '__main__':
-    simEnv = SimulationEnvironment(mapPeriod = 500, anchorCount = 4, anchorDataList = [[0,0,0],
-                                                                                       [0,0,10],
-                                                                                       [0,10,0],
-                                                                                       [10,0,0]])
-    simEnv.addNode([3, 40, 19])
-    simEnv.addNode([4, 40, 22])
-    simEnv.addNode([3, 37, 4])
+    # Unit Test
+    errors = 0
+
+    archspec = ArchSpec(Hub, Anchor, Node)
+    simEnv = SimulationEnvironment()
+    hub = simEnv.createHub(superSmartTrilaterationAlgorithm)
+    for i in range(0,4):
+        anchor = simEnv.createAnchor(0, 0, i)
+        simEnv.associateAnchor(hub, anchor)
+    node = simEnv.createNode(3, 3, 3, 0, 0, 0)
+    hub.getNodePosition(node)
+    while(1):
+        simEnv.mainloop()
+        
+    
