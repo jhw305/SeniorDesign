@@ -1,12 +1,14 @@
+#!/usr/bin/env python3
 # Document Name: Hub.py
 # Author: Jesse Campbell
 # Date Created: August 18 2018
 
-from simlib.simulated import Simulated
-from simlib.anchor import Anchor
-from simlib.node import Node
-from simlib.action import Action
+from simulated import Simulated
+from anchor import Anchor
+from node import Node
+from action import Action
 from abc import ABC
+import sys
 
 class Hub(Simulated, ABC):
     def __init__(self):
@@ -171,6 +173,7 @@ class Hub(Simulated, ABC):
         self.actionQueue.prependAction(Action(function, args, ctr_val = ctr))
 
 if __name__=='__main__':
-    #unit tests?
+    # TODO
     hub = Hub(0)
     hub.addAnchor(0)
+    sys.exit( 0 )

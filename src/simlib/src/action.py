@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import sys
+
 """@package Action
 This module defines the Action object, which is used, together with the ActionQueue class,
 to implement delayed function calls.
@@ -158,3 +160,5 @@ if __name__ == "__main__" :
 	print( "Unit test complete." )
 	print( "Number of errors: " + str( errors ) )
 	print( "===================" )
+
+	sys.exit( errors )

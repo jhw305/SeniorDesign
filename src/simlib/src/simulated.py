@@ -13,7 +13,9 @@ execution).
 #############
 import types
 from abc import ABC , abstractmethod
-from simlib.action import Action
+from action import Action
+import sys
+
 DEBUG = True
 
 
@@ -157,7 +159,4 @@ if __name__ == '__main__':
 	print( "Unit test complete." )
 	print( "Number of errors:",  errors )
 	print( "===================" )
-	
-	
-	
-	
+	sys.exit( errors )

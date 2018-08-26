@@ -1,14 +1,15 @@
-# Document Name: DW1000_Node_1.py
+#!/usr/bin/env python3
+# Document Name: DW1000_Anchor_1.py
 # Author: Jesse Campbell
 # Date Created: August 19 2018
 
-from simlib.node import Node
-from simlib.FSM import State
+from anchor import Anchor
+from FSM import State
+import sys
 
-class DW1000_Node_1(Node):
-    def __init__(self, nodeID : int, xPos : int, yPos : int, zPos : int,
-                 xVel : int, yVel : int, zVel : int, signalList : list):
-        Node.__init__(self, nodeID, xPos, yPos, zPos, xVel, yVel, zVel, signalList)
+class DW1000_Anchor_1(Anchor):
+    def __init__(self, nodeID : int, xPos : int, yPos : int, zPos : int, signalList : list):
+        Anchor.__init__(self, nodeID, xPos, yPos, zPos, signalList)
         
         OFF_STATE = State({'current' : self.getOffCurrent, 'time' : self.getTime, 'state' : 'off_state'})
         DEEPSLEEP_STATE = State({'current' : self.getDeepSleepCurrent, 'time' : self.getTime, 'state' : 'deepsleep_state'})
@@ -65,3 +66,7 @@ class DW1000_Node_1(Node):
 
     def mainloop(self):
         pass
+
+if __name__ == "__main__" :
+    # TODO
+    sys.exit( 0 )

@@ -1,12 +1,14 @@
+#!/usr/bin/env python3
 # Document Name: Anchor.py
 # Author: Jesse Campbell
 # Date Created: August 18 2018
 
-from simlib.simulated import Simulated
-from simlib.FSM import Device
-from simlib.node import Node
-from simlib.action import Action
+from simulated import Simulated
+from FSM import Device
+from node import Node
+from action import Action
 from abc import ABC
+import sys
 
 class Anchor(Device, ABC):
     def __init__(self, ID : int, xPos : int, yPos : int, zPos : int,
@@ -81,4 +83,6 @@ class Anchor(Device, ABC):
     def prependAction(self, function : "Function", args : list, ctr : int = 0):
         self.actionQueue.prependAction(Action(function, args, ctr_val = ctr))
             
-
+if __name__ == "__main__" :
+    # TODO Add unit test
+    sys.exit( 0 )

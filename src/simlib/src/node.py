@@ -1,10 +1,12 @@
+#!/usr/bin/env python3
 # Document Name: Node.py
 # Author: Jesse Campbell
 # Date Created: August 18 2018
 
-from simlib.simulated import Simulated
-from simlib.FSM import Device
+from simulated import Simulated
+from FSM import Device
 from abc import ABC
+import sys
 
 class Node(Device):
     def __init__(self, ID : int, xPos : int, yPos : int, zPos : int,
@@ -47,3 +49,7 @@ class Node(Device):
     def mainloop():
         pass
 '''
+
+if __name__ == "__main__" :
+    # TODO
+    sys.exit( 0 )

@@ -9,6 +9,7 @@ anchors.
 ## Imports ##
 #############
 import simulated
+import sys
 
 #############
 ## Classes ##
@@ -113,3 +114,5 @@ if __name__ == "__main__" :
 	print( "Finished unit test" )
 	print( "Errors: " + str( errors ) )
 	print( "===============" )
+
+	sys.exit( errors )

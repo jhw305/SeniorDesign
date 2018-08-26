@@ -3,9 +3,10 @@
 ###################################################################################
 # TIME WILL BE IN MICROSECONDS, CURRENT WILL BE IN MILLIAMPS                      #
 ###################################################################################
-from simlib.simulated import Simulated
+from simulated import Simulated
 from abc import ABC , abstractmethod
-from simlib.action import Action
+from action import Action
+import sys
 
 OSC_STARTUP_SEND_CURRENT = 3
 OSC_STARTUP_SEND_TIME = 2000
@@ -199,3 +200,4 @@ if __name__ == "__main__":
         print( "RX_STATE current is incorrect! (Read: " + str( my_current ) + ")" )
         errors += 1
     print( "Number of errors: " + str( errors ) )
+    sys.exit( errors )

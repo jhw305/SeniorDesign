@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Document Name: SimulationEnvironment.py
 # Author: Jesse Campbell
 # Date Created: August 18 2018
@@ -14,13 +15,14 @@ Things to consider:
 '''
 
 from simlib.archspec import ArchSpec
-from simlib.hub import Hub
-from simlib.anchor import Anchor
-from simlib.node import Node
-from simlib.FSM import State
-from simlib.DW1000_Anchor_1 import DW1000_Anchor_1
-from simlib.DW1000_Node_1 import DW1000_Node_1
-from simlib.ExampleHub import ExampleHub
+from hub import Hub
+from anchor import Anchor
+from node import Node
+from FSM import State
+from DW1000_Anchor_1 import DW1000_Anchor_1
+from DW1000_Node_1 import DW1000_Node_1
+from ExampleHub import ExampleHub
+import sys
 
 class SimulationEnvironment():
     def __init__(self):
@@ -122,5 +124,6 @@ if __name__ == '__main__':
     assert(simEnv.nodes[0].xPos == 3)
     assert(simEnv.anchors[0].zPos == 0)
     
-    
+    sys.exit( 1 )
+    # sys.exit( errors )
 

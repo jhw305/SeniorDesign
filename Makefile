@@ -1,3 +1,2 @@
-proposal: proposal.tex
-	pdflatex proposal.tex
-	pdflatex proposal.tex
+buildpy: src/setup.py
+	./$< install --user

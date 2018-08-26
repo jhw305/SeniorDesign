@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
 # Document Name: ExampleHub.py
 # Author: Jesse Campbell
 # Date Created: August 19 2018
 
-from simlib.hub import Hub
+from hub import Hub
+import sys
 
 class ExampleHub(Hub):
     def __init__(self):
@@ -15,3 +17,7 @@ class ExampleHub(Hub):
 
     def mainloop(self):
         pass
+
+if __name__ == "__main__" :
+    # TODO
+    sys.exit( 0 )
