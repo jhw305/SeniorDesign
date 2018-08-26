@@ -3,6 +3,8 @@
 pysrc=src/simlib/src/
 errcnt=0
 
+echo "Building project..."
+make
 echo "Running turnin script..."
 for file in $pysrc/*.py ; do
 	# Run unit test in all Python source files
@@ -13,3 +15,9 @@ for file in $pysrc/*.py ; do
 	errcnt=$((errcnt+"$?"))
 done
 echo "Total error count: $errcnt"
+if [ "$errcnt" != "0" ] ; then
+	echo "Please fix errors. Not pushing."
+else
+	echo "No errors. Now pushing."
+	git push
+fi

@@ -1,0 +1,3 @@
+Here is the Python library for the simulator.
+
+All modules are required to have a main body that acts as a unit test. The program's exit code is the number of errors encountered in the unit test. All Python files in src/ should act as a standalone executable that runs the unit test in the main body when executed. Please include the shebang "#!/usr/bin/env python3" at the top of the file so that your file can be executed.

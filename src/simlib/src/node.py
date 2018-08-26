@@ -8,11 +8,11 @@ from FSM import Device
 from abc import ABC
 import sys
 
-class Node(Device):
+class Node( Simulated ):
     def __init__(self, ID : int, xPos : int, yPos : int, zPos : int,
                                  xVel : int, yVel : int, zVel : int,
                  signalList : list):
-        #super().__init__()
+        super().__init__()
         self.time = 0
         self.ID = ID
         self.xPos = xPos
