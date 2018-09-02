@@ -1,0 +1,31 @@
+- Worst case for database: turn down pinging frequency (good for database and HW)
+
+Jesse
+- Evaluate different database systems: SQL, MongoDB, other NoSQL databases, etc.
+- Try to get basic querying from and writing to a database
+Tanner
+- Getting server up
+- Try out a cross-platform app dev platform and get something really basic to run
+	- Apache Cordova
+	- Xamarin
+	- etc.
+- Requirements for app dev:
+	- Should support version control without tons of bloated files and directories
+	- Ideally, be open source (BSD license I think is best because then we can sell it)
+	- Support C/C++ (easy to integrate with MCU and other APIs)
+	- Roman wants it to run on Linux
+	- Bare minimum: IOS, Android, and probably Windows (most common for business desktops)
+	- In an ideal world: Mac OS X and Linux (Ubuntu specifically since that's most popular) as well
+Roman and Chandler:
+	- Mockup designs for the app (meeting Thursday at 8pm)
+Roman and Jason:
+	- Discussing hardware interfacing with DW1000
+	- How do we know where the user is relative to the different items in the store?
+Roman:
+	- Look into PCB design houses and their pricing on custom boards
+
+Features:
+- Store-dependent shopping list. Add item by item. Search through the store's directory.
+- No path through the store. Arrow that displays your direction.
+- Manually check it off. You find the item at the spot.
+- Database for the different stores, we also store all of the items in the store. Google Maps tells you where the store is/how far.
