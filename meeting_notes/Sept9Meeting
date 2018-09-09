@@ -1,0 +1,32 @@
+Jesse
+- meeting later this week to discuss database implementation details
+- Store's Database
+	- what module it is, how much it costs, item number, and potentially quantity
+	- Query the store's database for item list.
+- Central Database
+	- every store that uses our software,
+- SQL database is to be used
+- Job for this week
+	- API for database querying/writing to database for store 
+	- We'll deal with central database next week. Later, we'll need to consider how
+	to talk to the store's database over the Internet.
+	- The software API does three things...
+		1) it lets the app get information about the store's items and modules
+		2) it provides an easy way to integrate with store inventory system.
+		3) it abstracts the database system, so we can always change to MongoDB at
+		a later point and all dependent code is fine
+	- Look into Apache Cordova. The API may be written in JavaScript.
+
+Tanner and Chandler
+	- Begin developing the app GUI with dummy functions for the different features and such
+	- The app needs to be cross-platform. At some point, we'll need to consider the store's
+	perspective.
+	- Experiment with Apache Cordova for now before we meet to hash out more technical details
+	- Tanner should contact me since I forgot if he wanted to do DB or GUI stuff.
+
+Jason
+	- Look into how to determine a user's position relative to the store's items with existing
+	mobile technology (GPS, Bluetooth, etc.).
+
+Roman
+	- Develop project schedule and meet with the other members
