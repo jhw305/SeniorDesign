@@ -1,0 +1,34 @@
+How do we know where the users are?
+QR code on the public node.
+You scan it.
+The database up in the sky queries the store for the position of the public node.
+You query the database up in the sky for the public node's position.
+The public nodes are attached to carts and baskets.
+Part of marketing: consumers must use carts or baskets to use this feature and
+will therefore be tempted to buy more things
+
+Tuesday 8pm meeting - Jason, Chandler, and Tanner - GUI
+- how do we generalize GUI elements?
+- reevaluate schedule
+Wednesday 8pm meeting - Jesse - Database
+- what data needs to go in the database?
+
+Meeting next Sunday - possibly IRL
+Meeting that Friday from 6p to 7p after senior design
+
+Roman
+- Contact Bagherzadeh
+- Code integration after much of the GUI work has been done (starting probably next Monday)
+- Add Google Maps and QR code integration to schedule
+- How does the store add items? What is that interface?
+Tanner
+- shopping list (slide 3; panel 1)
+Chandler
+- front page and transitioning to search for stores (slide 1; panel 1, and transition to slide 1; panel 2)
+Jason
+- searching for stores (slide 1; panel 2 through slide 2; panel 2)
+- searching for items to place in shopping list (slide 3; panel 2)
+Jesse
+- look into how to make the database
+- look into back-end to actually communicate with the database (querying and writing to it)
+- look into JavaScript front-end so user can call functions at app GUI level to actually talk to the database
