@@ -1,0 +1,56 @@
+.buttonTopBar{
+    border: #37393A 1px solid;
+    border-radius: 10%;
+    box-shadow: 0 5px #E8EEF2;
+    background-color: #89B0AE;   
+    color: #37393A;
+    font-size: 100%;
+    padding: 4px;
+    text-decoration: none;
+}
+
+.editQuantity{
+    width: 3em;
+    height: 3em;
+    text-align: center;
+}
+
+.editQuantityButtons{
+    background-color: #ffffff;
+}
+
+#backToSearch{    
+    float: left;
+    height: 40px;
+    margin-bottom:2%;
+    width: 100px;
+}
+
+#bottomBar{
+    background-color: #89B0AE;
+    margin: 0 auto;
+    bottom:0;
+    position: fixed;
+    width: 100%;
+}
+#bottomBar a {
+    display:block;
+    color: #37393A;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+  }
+  
+
+#shoppingList{
+    border: black 1px solid; 
+    font-size: 25px;
+    margin: 0 auto;
+    width: 94%;
+}             
+
+#storeView{
+    float: right;
+    margin: 1.5%;
+    width: 100px;
+}

@@ -1,0 +1,34 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: #F7F7F7;
+    color: #37393A;
+    font-family: Helvetica, Arial, sans-serif
+}
+
+p{
+    margin: 0;
+    padding: 0
+}
+table, th, td {
+    border-bottom: 1px solid #37393A;
+    border-collapse: collapse;
+    font-weight: normal;
+    margin: 0 auto;
+}
+th, td {
+    padding: 20px;
+    width: 30%;
+    text-align: center;    
+}
+tr.selected {
+    background-color: #89B0AE;
+    vertical-align: middle;
+    padding: 1.5em;
+}
+
+.textSmall{font-size: 16px}
+.textMedium{font-size: 24px}
+.textLarge{font-size: 36px}
+.textBold{font-weight: 500}
+.textCenter{text-align: center}
