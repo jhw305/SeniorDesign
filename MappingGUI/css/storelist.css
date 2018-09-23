@@ -1,0 +1,40 @@
+img.resize{
+    width:300px;
+    height:100px;
+    max-width:50%;
+    max-height:20%;
+}
+
+.icon {
+
+    width:100px;
+    height:100px;
+    max-width:50%;
+    max-height:20%;
+
+}
+
+.table-format{
+
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 94%;
+
+}
+
+.center-top{
+
+    position: center;
+    margin-left: 50%;
+    transform: translate(-50%, -50%);
+    
+
+}
+
+.searchBox{
+
+    margin-top: 20px;
+    border: 1px solid black;
+
+}
