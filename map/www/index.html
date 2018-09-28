@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>The Map</title>
+	</head>
+	<body>
+		<canvas id="themap" width="500%" height="500%" style="border: 1px solid #d3d3d3;">
+		</canvas>
+		<br>
+		Test placing items:
+		<input type="textbox" value="x_item" id="x_item">
+		<input type="textbox" value="y_item" id="y_item">
+		<button onclick="_plot( )">Plot!</button>
+		<br>
+		Test changing user's position and orientation:
+		<input type="textbox" value="x" id="x_user">
+		<input type="textbox" value="y" id="y_user">
+		<input type="textbox" value="theta" id="theta_user">
+		<button onclick="_plot_user( )">Plot!</button>
+		<script type="text/javascript" src="map.js"></script>
+	</body>
+</html>
