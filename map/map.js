@@ -18,7 +18,8 @@ set_bground( ) ;
 
 // Constants
 var delta = 5 ;
-var default_side_length = 10 ;
+var default_side_length = 30 ;
+var default_height = 25 ;
 
 // Stored user triangle
 var current_user_x = 0 ;
@@ -111,7 +112,7 @@ function deg_to_rad( theta_in_degrees ) {
 }
 
 // Draw triangle centered at ( user_x , user_y )
-function plot_user( user_x , user_y , theta_in_degrees , color , side_length ) {
+function plot_user( user_x , user_y , theta_in_degrees , color , side_length , height ) {
 	var canvas = document.getElementById( "themap" ) ;
 	var mycontext = canvas.getContext( "2d" ) ;
 	var center = [ [ user_x ] , [ user_y ] ] ;
@@ -119,18 +120,19 @@ function plot_user( user_x , user_y , theta_in_degrees , color , side_length ) {
 	// Get the position of each vertex before rotation
 	A = new Array( 2 ) ;
 	A[ 0 ] = new Array( 1 ) ;
-	A[ 1 ] = new Array( 1 ) ; A[ 0 ][ 0 ] = user_x - ( ( Math.sqrt( 3.0 ) / 2.0 ) * side_length ) ;
-	A[ 1 ][ 0 ] = user_y - ( side_length / 4.0 ) ;
+	A[ 1 ] = new Array( 1 ) ;
+	A[ 0 ][ 0 ] = user_x - Math.sqrt( ( side_length * side_length ) - ( height * height ) ) ;
+	A[ 1 ][ 0 ] = user_y - ( height / 2.0 ) ;
 	B = new Array( 2 ) ;
 	B[ 0 ] = new Array( 1 ) ;
 	B[ 1 ] = new Array( 1 ) ;
-	B[ 0 ][ 0 ] = user_x + ( ( Math.sqrt( 3.0 ) / 2.0 ) * side_length ) ;
-	B[ 1 ][ 0 ] = user_y - ( side_length / 4.0 ) ;
+	B[ 0 ][ 0 ] = user_x + Math.sqrt( ( side_length * side_length ) - ( height * height ) ) ;
+	B[ 1 ][ 0 ] = user_y - ( height / 2.0 ) ;
 	C = new Array( 2 ) ;
 	C[ 0 ] = new Array( 1 ) ;
 	C[ 1 ] = new Array( 1 ) ;
 	C[ 0 ][ 0 ] = user_x ;
-	C[ 1 ][ 0 ] = user_y + ( side_length / 4.0 ) ;
+	C[ 1 ][ 0 ] = user_y + ( height / 2.0 ) ;
 	// Get the rotation matrix
 	T = new Array( 2 ) ;
 	T[ 0 ] = new Array( 2 ) ;
@@ -205,7 +207,7 @@ function _plot_user( ) {
 	var theta = parseInt( document.getElementById( "theta_user" ).value ) ;
 	// Clear the current user arrow
 	if ( user_exists == true ) {
-		plot_user( current_user_x , current_user_y , current_user_theta , 'white' , default_side_length + delta ) ;
+		plot_user( current_user_x , current_user_y , current_user_theta , 'white' , default_side_length + delta , default_height + delta ) ;
 	} else {
 		user_exists = true ;
 	}
@@ -213,7 +215,7 @@ function _plot_user( ) {
 	set_bground( ) ;
 	plot_all_points( ) ;
 	// Plot user's triangle
-	plot_user( x , y , theta , 'red' , default_side_length ) ;
+	plot_user( x , y , theta , 'red' , default_side_length , default_height ) ;
 	// Set global vars
 	current_user_x = x ;
 	current_user_y = y ;
