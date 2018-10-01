@@ -1,0 +1,38 @@
+\documentclass{article}
+\begin{document}
+Q: What is your team name? \\
+A: Aviato \\
+Q: Who are your group members? Pick one member to be the leader.
+A: \\
+\begin{itemize}
+\item Roman Parise (Electrical Engineering; Team Captain)
+\item Jesse Campbell (Computer Engineering)
+\item Chandler Ditolla (Computer Engineering)
+\item Tanner Emerson (Computer Engineering)
+\item Jason Wang (Electrical Engineering)
+\end{itemize}
+We have already received prior approval from Prof. Kleinfelder to have a $5$ person group.
+\\
+Q: Who is your advisor? Are you enrolled in their lab? \\
+A: Our advisor is Prof. Bagherzadeh. We have all enrolled in his lab.
+\\
+Q: What is your project goal? \\
+A: Our goal is to develop an app together with a hardware module for locating items within a store via the user's phone.
+\\
+Q: What are the high level hardware and software design components? \\
+A: The user interacts with a mobile application. The mobile application retrieves the location of items from a database on a dedicated server. The store has a software interface that lets them load the store's floorplan and configure other settings. Each item in the store is associated with a low cost, battery-powered hardware module. The store has a central "hub" that collects the locations of the hardware modules. Module locations are determined relative to the central hub. \\
+Locations are determined using a combination of trilateration algorithms and RF communication. Three of the modules are deemed "anchors". Based on the transmit and receive times of signals from each anchor node to each module, the distance from each anchor node to each module can be determined. These can then be used to determine the coordinates of each module relative to the central hub. This information is then stored in the database so that the user can access the location of each item.
+
+Q: What is the responsibility of each member? \\
+A: \\
+\begin{itemize}
+\item Roman Parise (Team Captain and Hardware Engineer): Manages team schedule and defines the system architecture/hardware specification
+\item Jesse Campbell (Application and Database Software Engineer): Develops the front-end user and store interfaces and the database
+\item Chandler Ditolla (System Software Engineer): Develops firmware for the hardware modules
+\item Tanner Emerson (System Software Engineer): Develops software interface between the hardware module and the database and aids in the PCB design of the hardware module
+\item Jason Wang (Hardware Engineer): Works on PCB design, part selection, and 3D-printed housing for the hardware module
+\end{itemize}
+
+Q: What tools and materials will you need? \\
+A: The project is divided into two development stages. For the first development stage, we only need development boards for a transceiver chip, which we received pro bono from the manufacturer. Everything else reduces to software design. For the second development stage, we will be working on custom board design and firmware to reduce cost and increase battery life. This will require board components, such as the transceiver chip and flash memory, PCB fabrication, a battery, and a 3D-printed housing.
+\end{document}
