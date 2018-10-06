@@ -1,0 +1,85 @@
+Can set a modules as either achor or tag by using the following commands:
+
+    first anchor: nmi (anchor node initiator set at pos x = 0, y = 0)
+    anchor      : nma
+    tag         : nmt
+    listener    : nmp (to get all node locations use UWB Passive mode)
+
+Each anchor location can be set using: aps (aps <x> <y> <z>)
+
+Once all of the achor positions have been set, the tag locations will be 
+found using trilatertion... no action necessary 
+
+Real time position data can be displayed on the computer using the listener 
+and any of the following commands:
+    lec : meas and pos in csv form
+    lep : pos in csv form
+    We have seen no difference when either of the two were used.
+
+The si(system info) command returns the following:
+        [000017.380 INF] cfg:
+        [000017.380 INF] >fw2=x00044000
+        [000017.380 INF]  board=DWM1001_A2
+        [000017.380 INF]  cfg_ver=x00010700
+        [000017.390 INF]  fw_ver=x01010501
+        [000017.390 INF]  hw_ver=xDECA002A
+        [000017.390 INF]  opt=x13C1A140
+        [000017.400 INF]  fw_size[0]=x0001F000
+        [000017.400 INF]  fw_size[1]=x00022000
+        [000017.400 INF]  fw_size[2]=x0003C000
+        [000017.410 INF]  fw_csum[0]=x9445F89E
+        [000017.410 INF]  fw_csum[1]=x4B6ED75F
+        [000017.410 INF]  fw_csum[2]=x5C32B716
+        [000017.420 INF] opt: ACC LEDS TWR LE BPC UWB0 BLE I2C SPI UART 
+        [000017.420 INF] mcu: temp=27.2 hfclk=xtal:on lfclk=rc:on
+        [000017.430 INF] uptime: 00:00:17.430 0 days (17430 ms)
+        [000017.430 INF] mem: free=960 alloc=10048 tot=11008
+        [000017.440 INF] uwb: ch5 prf64 plen128 pac8 txcode9 rxcode9 sfd0 baud6800 phrext sfdto129 smart1
+        [000017.450 INF] uwb: tx_pwr=xC6/x29496989 125:250:500:norm[ms]=19:16:13:10[dB] pgcnt=863 temp=23
+        [000017.460 INF] uwb0: lna=0 xtaltrim=19 tx_delay=16472 rx_delay=16472
+        [000017.460 INF] uwb0: ID dev=xDECA0130 part=xD4825415 lot=x04325100
+        **********   [000017.470 INF] uwb0: panid=x970A addr=xDECAE29CA8E25415   **********
+        [000017.480 INF] mode: tn (act,twr,np,le)
+        [000017.480 INF] uwbmac: connected sess_id=x4B mstat=x00000882 sf_per_us=100000 sl_us=500 sl_cnt=200
+        [000017.490 INF] tn: upd_per=0 upd_per_stat=0 us
+        [000017.490 INF] tn: cnt=10 rtc:hrclk:devt dri=1.000061035:0.999990000:0.999998852 dri_av=1.000061035:0.999994316
+        [000017.500 INF] ble: addr=D4:D7:BC:DA:07:D0
+    
+    The last 4 of the address above is the address that appears when the lec or lep commands are 
+    called. This will be important to note when you are setting up the network
+
+The following is a sample output of lep command:
+
+    POS,0,9206,0.49,-0.35,0.56,50,x96
+    POS,1,5415,0.86,0.73,0.28,50,x7D
+    POS,0,9206,0.49,-0.35,0.56,0,x97
+    POS,1,5415,0.92,0.83,0.31,50,x7E
+    POS,0,9206,0.52,-0.46,0.55,50,x98
+    POS,1,5415,0.96,0.85,0.31,50,x7F
+    POS,0,9206,0.52,-0.46,0.55,0,x99
+    POS,1,5415,0.99,0.84,0.29,50,x80
+    POS,0,5415,1.01,0.79,0.25,50,x81
+    POS,0,9206,0.52,-0.48,0.55,50,x9B
+    POS,1,5415,0.96,0.78,0.22,50,x82
+    POS,0,9206,0.52,-0.48,0.55,0,x9C
+    POS,1,5415,0.92,0.76,0.18,50,x83
+    POS,0,9206,0.53,-0.53,0.54,50,x9D
+    POS,1,5415,0.89,0.72,0.19,50,x84
+    POS,0,9206,0.51,-0.58,0.53,50,x9E
+    POS,1,5415,0.87,0.73,0.17,50,x85
+    POS,0,9206,0.54,-0.62,0.55,50,x9F
+    POS,1,5415,0.85,0.72,0.18,50,x86
+    POS,0,9206,0.54,-0.62,0.55,0,xA0
+    POS,1,5415,0.85,0.72,0.16,50,x87
+    POS,0,5415,0.85,0.72,0.16,50,x88
+    POS,0,5415,0.87,0.71,0.15,50,x89
+    POS,0,5415,0.87,0.71,0.15,50,x8A
+    POS,0,9206,0.56,-0.60,0.51,50,xA4
+    POS,1,5415,0.86,0.72,0.14,50,x8B
+    POS,0,9206,0.56,-0.60,0.51,0,xA5
+    POS,1,5415,0.85,0.71,0.13,50,x8C
+    POS,0,9206,0.58,-0.59,0.49,50,xA6
+    POS,1,5415,0.86,0.72,0.16,50,x8D
+    POS,0,9206,0.59,-0.58,0.47,50,xA7
+    POS,1,5415,0.87,0.73,0.18,50,x8E
+
