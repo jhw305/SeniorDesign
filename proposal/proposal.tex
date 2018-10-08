@@ -4,7 +4,7 @@
 \begin{document}
 \begin{center}
 {\Large Indoor Positioning System for Inventory Management} \\
-{\small Jesse Campbell, Roman Parise, Jason Wang, Tanner Emerson, Chandler Ditolla}
+{\small Jesse Campbell, Roman Parise, Jason Wang, Tanner Emerson, Chandler Ditolla, Nader Bagherzadeh}
 \end{center}
 \section{Project Description}
 We propose a system for keeping track of the physical location of an outlet or grocery store's inventory and to allow that information to be utilized by consumers and the store itself. \\
@@ -16,19 +16,20 @@ Stores currently employ devices physically attached to a number of expensive pro
 This system consists of the following components:
 \begin{itemize}
 \item A large number of small, inexpensive modules that can be attached to the objects
-\item A 'central hub' that serves as the location anchor of our system. This consists of a single processing unit and at least 4 nodes arrayed across a ceiling in a known configuration. This anchor constantly pings the modules and then uses trilateration to keep track of the coordinates of the modules with respect to itself
+\item A 'central hub' that serves as the location anchor of our system. This consists of a single processing unit and at least $3$ nodes arrayed across a ceiling in a known configuration. This anchor constantly pings the modules and then uses trilateration to keep track of the coordinates of the modules with respect to itself
 \item A simple, mobile application that allows the shopper to acquire the coordinates of the modules
+\item A desktop application used by the store to associate the modules with items in the store
 \end{itemize}
 The modules are to be designed so that they are easy to mass produce to ensure that the system is scalable.
-A store employee attaches the module to a product or location of interest and then associates that module with the relevant item in a database of items that store sells.
+A store employee attaches the module to a product or location of interest and then associates that module with the relevant item in a database of items that store sells using the store's application.
 The mapping of these "labels" to the coordinates of the object is stored in a database from the central hub.
-The shopper's mobile application can then access the coordinates of any of the given modules via a software interface to the information stored in this database.
+The store's application sends this information to a dedicated server that aggregate data from various stores.
+The shopper's mobile application can then access the coordinates of any of the given modules by querying a central database that stores the information on the dedicated server.
 
 \section{Implementation Plan}
 % What is central hub for proof of concept
 A proof-of-concept implementation will include a reasonable number of small modules together with a central hub.
-The central hub could be a Raspberry Pi board with proper external peripherals for communication with the modules.
-Most of the hardware efforts are dedicated to the design and system-level programming of the small modules, so that they can reliably communicate with the anchor modules and the central hub.
+Most of the hardware efforts are dedicated to the design and system-level programming of the small modules.
 The initial full-system test will occur in a $100$ft by $100$ft conference room.
 The central hub will precisely locate various modules scattered throughout the room. \\
 
@@ -38,7 +39,7 @@ The housing is to have a mechanical locking mechanism so that it can be connecte
 The store is able to control whether the lock is opened or closed through a software interface. \\
 
 Communication between modules occurs wirelessly at microwave frequencies to ensure that they can be very compact.
-The proposed transceiver chip is Decawave's DW1000.
+The proposed transceiver chip is Decawave's DW1000, which contains fully-integrated RF analog and digital electronics.
 The chip is able to handle signals on the $3.5$\si{\giga\hertz} to $6.5$\si{\giga\hertz} band.
 Antenna sizes are often on the same order of magnitude as the wavelength of its supported frequencies.
 At these frequencies, the antenna size is expected to be on the order of centimeters, meaning that a full communication system can implemented in a very small housing. \\
@@ -47,65 +48,102 @@ This particular chip also has the advantage of detecting relatively small object
 A communication system using this chip can locate items up to $290$\si{\meter} away to a precision on the order of centimeters.
 Thus, the system should have the ability to locate reasonably small locations in a very large store, making it perfect for this application. \\
 
-Measures may need to be taken to increase the lifetime of the device.
-Initial tests will be performed to characterize the current drawn by the chip.
-If it turns out that the chip draws too much current, a control system is to be implemented, possibly with a microcontroller or some other circuitry, that cuts off current to the chip unless it is in use.
-The software may need to adjust as well to ensure that modules are not unnecessarily pinged. \\
+We have already received several test boards containing DW1000s from the manufacturer.
+However, the cost of the board is prohibitive.
+Power consumption may also prove to be an issue that limits the system's lifetime.
+Thus, we propose designing a custom printed-circuit board (PCB) that removes excess hardware, such as the accelerometer.
+This will reduce hardware costs.
+The software may also need to be adjusted as well to ensure that modules are not unnecessarily pinged and therefore do not consume unnecessary amounts of power.
+If the power consumption can be decreased, the battery can be downgraded, also reducing hardware costs. \\
 
 The central hub's software is to periodically request the location of various items in the store.
 It communicates this request to the anchor modules.
 Those anchors then ping the other modules in the network and acquire the distance they are away from each anchor.
 This information is then sent back to the central hub, and the central hub calculates the approximate position of each device based on these distances.
 The central hub then uploads this information to a database of the positions of different items in the store.
-The main focuses of software development efforts are the algorithms that calculate these positions and the system that stores the mapping of items to positions in the database. \\
+The main focuses of software development efforts are on the database system and the store and consumer applications.\\
 
-After this, a mobile application that accesses this information and presents it to the shopper or the store is then to be developed.
 For either of these end users to make sense of the position information, the store is advised to provide a map.
 The users and the store are then able to see where each item is located on this map of the store.
 Furthermore, the store can select which items are publicly available for end users to see and which are warehouse or secret items that only the store should know. \\
 
 Below is a proposed plan for the project's implementation.
-\subsection{Stage 0}
-Early Deadline: Beginning of September \\
-Expected Deadline: Week 0 of Fall 2018 quarter \\
-Late Deadline: Week 2 of Fall 2018 quarter \\
-\begin{itemize}
-\item Develop an algorithm to determine the position of the modules. This should include robust error handling
-\item Determine the physical mechanism that ascertains the modules' distances from the central hub (i.e. communication protocol and hardware used)
-\item Determine the specification of the central hub and module hardware
-\item Purchase the DW1000 and other relevant electronics for initial tests
-\end{itemize}
-
 \subsection{Stage 1}
-Early Deadline: Week 0 of Fall 2018 quarter \\
-Expected Deadline: Week 5 of Fall 2018 quarter \\
-Late Deadline: Before fall design review \\
+Expected Deadline: By the Week of October 15th \\
 \begin{itemize}
-\item Begin testing and characterizing the DW1000 with the proposed algorithm
-\item Demonstrate a system with four anchor modules and one separate node using the DW1000
+\item Develop the first iteration of the consumer's mobile application
+\item Integrate the application with a database to keep track of the module positions in the store
+\item Get the DW1000 test boards to work and log the module location information to the databases
+\item Test the system in the conference room setting
 \end{itemize}
 
 \subsection{Stage 2}
-Early Deadline: Before fall design review \\
-Expected Deadline: Beginning of winter quarter \\
-Late Deadline: Before week 2 of winter quarter \\
+Expected Deadline: By the Week of October 29th \\
 \begin{itemize}
-\item Design a printed circuit board (PCB) for the next iteration of the modules
-\item Design the 3D printed housing and locking mechanism for the modules
-\item Design a more useful user-interface for both the store and the customer
+\item Determine the specification of custom hardware modules
+\item Develop the store's application
+\item Improve the user's application with a more appealing graphical interface
 \end{itemize}
 
 \subsection{Stage 3}
-Early Deadline: Before week 2 of winter quarter \\
-Expected Deadline: Before week 5 of winter quarter \\
-Late Deadline: Before winter design review \\
+Expected Deadline: By the week of December 31st \\
 \begin{itemize}
-\item Manufacture an acceptable number of modules
-\item Integrate the software written in stage 2 with the assembled hardware
-\item Devise a method to associate a building's drawn physical layout with our system
-\item Create the mobile application
-\item Integrate the system with a database and test for full functionality
-\item Test the system with the modules
+\item Design a printed circuit board (PCB) for the next iteration of the modules
+\item Submit the PCB design for manufacturing
+\item Add the ability for the store to add a layout
+\item Develop and implement a shortest-path algorithm
+\end{itemize}
+
+\subsection{Stage 4}
+Expected Deadline: By the week of January 14th \\
+\begin{itemize}
+\item Perform software bring-up of first PCBs
+\item Test and characterize the performance and lifetime of the modules
+\item Design the 3D printed housing and locking mechanism for the modules
+\item Plan new features for the application, such as item promotions or machine learning applications
+\end{itemize}
+
+\subsection{Stage 5}
+Expected Deadline: By the week of January 28th \\
+\begin{itemize}
+\item Fabricate the housing and run mechanical tests to ensure proper structural integrity and thermal behavior
+\item Integrate the PCBs with the housing
+\item Run the conference room test again using the new modules
+\item Begin implementing new application features
+\end{itemize}
+
+Team member responsibilities are as follows: \\
+\begin{itemize}
+\item Roman Parise
+	\begin{itemize}
+	\item Major: Electrical Engineering
+	\item Role: Team Captain and System Architecture Lead
+	\item Responsibilities: Manages team schedule and defines the system architecture/hardware specification
+	\end{itemize}
+\item Jesse Campbell
+	\begin{itemize}
+	\item Major: Computer Engineering
+	\item Role: Application and Database Software Engineer
+	\item Responsibilities: Develops the front-end user and store interfaces and the database
+	\end{itemize}
+\item Chandler Ditolla
+	\begin{itemize}
+	\item Major: Computer Engineering
+	\item Role: System Software Engineer
+	\item Responsibilities: Develops firmware for the hardware modules
+	\end{itemize}
+\item Tanner Emerson
+	\begin{itemize}
+	\item Major: Computer Engineering
+	\item Role: System Software Engineer
+	\item Responsibilities: Develops software interface between the hardware module and the database and aids in the PCB design of the hardware module
+	\end{itemize}
+\item Jason Wang
+	\begin{itemize}
+	\item Major: Electrical Engineering
+	\item Role: Hardware Engineer
+	\item Responsibilities: Works on PCB design, part selection, and 3D-printed housing for the hardware module
+	\end{itemize}
 \end{itemize}
 
 \section{References}
