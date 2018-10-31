@@ -1,0 +1,42 @@
+\documentclass{article}
+\begin{document}
+
+1. Present your current project timeline and what goals you plan to achieve by the end of the quarter.
+The week before the poster is due:
+\begin{itemize}
+\item The initial application complete and working with the DW1000 modules
+\item Full PCB layout, excluding circuit simulations
+\end{itemize}
+Before the end of the quarter:
+\begin{itemize}
+\item Store application assuming that we know the battery lifetime of each module, excluding smart algorithm to schedule charging
+\item Load firmware onto microcontrollers with programmers. These MCUs will be placed in a socket on the PCB after fabrication.
+\item Finish simulations of PCB, order parts for PCB, and place orders for PCB manufacturing and part assembly.
+\end{itemize}
+
+2. What is your current progress on the project?
+\begin{itemize}
+\item Most of the mobile application's GUI is complete
+\item Database with tables for inventory, stores, items, and nodes
+\item Initial parts list and specification for PCB
+\item Can acquire tag positions for DW1000 modules
+\end{itemize}
+
+3. Have you encountered any challenges so far? How has it affected your timeline?
+\begin{itemize}
+\item Effectively communicating with our teammates; delayed our timeline by $1$ week due to miscommunication and unclear requirements from different team members
+\item Difficulty communicating with the database on a remote server; delayed by $2$ weeks due to debugging
+\item Difficulties formulating a reasonable hardware specification and selecting proper parts; has not affected timeline yet
+\item Technical challenges in building a GUI; did not affect timeline
+\end{itemize}
+
+4. Do you foresee any challenges that your team may see in the future? How do you plan to overcome them?
+\begin{itemize}
+\item Learning how to use the Decawave's firmware (will overcome by purchasing the microcontrollers and programmers ahead of time to give us plenty of time to test before receiving finished PCBs)
+\item Optimal algorithm for scheduling module recharging (will overcome by getting the mobile applications and other software done first and then experimenting with possible algorithms; start off with naive algorithm in which only the modules with $10$ lowest battery lives are charged that day)
+\item Determining what simulations to run on the PCB schematic/layout (consider a few test suites, such as SPICE schematic or electromagnetic tests to check logic levels and power supply/temperature variations; design the boards so that they are easily testable, such as including specific test points to probe voltages along the circuit's signal chain; quickly prototype the first board and test the design to determine exact issues before future prototypes)
+\item Managing the logistics of ordering and assembling parts (be sure to place orders before end of quarter to leave plenty of time for parts to be delivered; design PCB using a modular floorplan approach so that parts can be easily swapped if vendors run out of stock shortly before ordering; ensure test suite is automated so that we can quickly re-simulate the boards with new parts)
+\item Software bringup and board testing after manufacturing (again, design for testability with specific test points along the signal chain so that we can easily isolate board faults; maybe consider adding industry standard debugging interface, like JTAG, to ensure easy board testing; possibly add redundant components or wires to withstand manufacturing defects)
+\end{itemize}
+
+\end{document}
