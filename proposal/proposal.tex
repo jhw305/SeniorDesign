@@ -1,9 +1,11 @@
 \documentclass{article}
 \usepackage{siunitx}
 \usepackage{url}
+\usepackage{placeins}
+\usepackage{csvsimple}
 \begin{document}
 \begin{center}
-{\Large Indoor Positioning System for Inventory Management} \\
+{\Large OSTRICH: Organized System Tracking Routes in Consumer Hotspots} \\
 {\small Jesse Campbell, Roman Parise, Jason Wang, Tanner Emerson, Chandler Ditolla, Nader Bagherzadeh}
 \end{center}
 \section{Project Description}
@@ -52,7 +54,7 @@ We have already received several test boards containing DW1000s from the manufac
 However, the cost of the board is prohibitive.
 Power consumption may also prove to be an issue that limits the system's lifetime.
 Thus, we propose designing a custom printed-circuit board (PCB) that removes excess hardware, such as the accelerometer.
-This will reduce hardware costs.
+This will reduce hardware costs for large volume production.
 The software may also need to be adjusted as well to ensure that modules are not unnecessarily pinged and therefore do not consume unnecessary amounts of power.
 If the power consumption can be decreased, the battery can be downgraded, also reducing hardware costs. \\
 
@@ -69,49 +71,56 @@ Furthermore, the store can select which items are publicly available for end use
 
 Below is a proposed plan for the project's implementation.
 \subsection{Stage 1}
-Expected Deadline: By the Week of October 15th \\
+Expected Deadline: Tuesday, November 20th
 \begin{itemize}
-\item Develop the first iteration of the consumer's mobile application
-\item Integrate the application with a database to keep track of the module positions in the store
-\item Get the DW1000 test boards to work and log the module location information to the databases
-\item Test the system in the conference room setting
+\item The initial application complete and working with the DW1000 modules
+\item Full PCB layout, excluding circuit simulations
 \end{itemize}
 
 \subsection{Stage 2}
-Expected Deadline: By the Week of October 29th \\
+Expected Deadline: By the End of Fall Quarter \\
 \begin{itemize}
-\item Determine the specification of custom hardware modules
-\item Develop the store's application
-\item Improve the user's application with a more appealing graphical interface
+\item Store application assuming that we know the battery lifetime of each module, excluding smart algorithm to schedule charging
+\item Load firmware onto microcontrollers (MCUs) with programmers. These MCUs will be placed in a socket on the PCB after fabrication.
+\item Finish simulations of PCB, order parts for PCB, and place orders for PCB manufacturing and part assembly.
 \end{itemize}
 
 \subsection{Stage 3}
-Expected Deadline: By the week of December 31st \\
+Expected Deadline: Before the Start of Winter Quarter \\
 \begin{itemize}
-\item Design a printed circuit board (PCB) for the next iteration of the modules
-\item Submit the PCB design for manufacturing
-\item Add the ability for the store to add a layout
-\item Develop and implement a shortest-path algorithm
+\item Acquire access to test equipment for when the boards are finished
+\item Determine validation tests to run on the finished boards
+\item Design the 3D-printed housing, excluding mechanical stress simulations
+\item Develop smart charging algorithm
+\item Validate Decawave firmware by testing the MCU with a Decawave chip
+\item Begin working on firmware modification to support battery life monitoring
+\item Receive the finished boards
 \end{itemize}
 
 \subsection{Stage 4}
-Expected Deadline: By the week of January 14th \\
+Expected Deadline: Before Week 2 of Winter Quarter \\
 \begin{itemize}
-\item Perform software bring-up of first PCBs
-\item Test and characterize the performance and lifetime of the modules
-\item Design the 3D printed housing and locking mechanism for the modules
-\item Plan new features for the application, such as item promotions or machine learning applications
+\item Determine any operational faults in the finished boards
+\item 3D print the housing
+\item Finish firmware modification
+\item Improve robustness and security of applications and database
+\item Configure optimal algorithm to ping modules
 \end{itemize}
 
 \subsection{Stage 5}
-Expected Deadline: By the week of January 28th \\
+Expected Deadline: Before Week 3 of Winter Quarter \\
 \begin{itemize}
-\item Fabricate the housing and run mechanical tests to ensure proper structural integrity and thermal behavior
-\item Integrate the PCBs with the housing
-\item Run the conference room test again using the new modules
-\item Begin implementing new application features
+\item Fix PCB layout if necessary and resubmit for fabrication
+\item Otherwise, integrate the boards, 3D-printed housing, firmware, and application-level software
 \end{itemize}
 
+\subsection{Stage 6}
+Expected Deadline: Before Winter Design Review \\
+\begin{itemize}
+\item Finish integration and testing of the final system
+\end{itemize}
+
+\section{Team Member Responsibilities}
 Team member responsibilities are as follows: \\
 \begin{itemize}
 \item Roman Parise
@@ -120,34 +129,96 @@ Team member responsibilities are as follows: \\
 	\item Role: Team Captain and System Architecture Lead
 	\item Responsibilities: Manages team schedule and defines the system architecture/hardware specification
 	\end{itemize}
+Personal Statement:
+
+I am Roman Parise, a senior studying Electrical Engineering. I have interned for the past two summers at Intel Corporation, working on datacenter chips, and do research in the Neuromorphic Machine Intelligence Laboratory at UC Irvine. My background in digital circuit design and computer architecture is complemented by my RF/microwave specialization coursework, which includes graduate coursework in microwave circuit design. These experiences have helped me develop a perspective on how electronic systems and wireless communication work at various levels in the design hierarchy.
+
+I want to pursue this research to further the field of indoor positioning and to apply my knowledge of various engineering disciplines to real world problems. Indoor positioning technology has been around for years, but it has never had the impact that this group would like to achieve. My colleagues and I desire to develop a practical and commercializable indoor positioning system that can be easily deployed in existing stores with minimal overhead. UROP's funding is critical to being able to manufacture the hardware to test the system in a real world setting. Working on this project will help me understand how to apply fundamental knowledge to designing consumer products, an integral part of any engineer's career.
+
 \item Jesse Campbell
 	\begin{itemize}
 	\item Major: Computer Engineering
 	\item Role: Application and Database Software Engineer
 	\item Responsibilities: Develops the front-end user and store interfaces and the database
 	\end{itemize}
+Personal Statement:
+
+My name is Jesse Campbell. I am a 4th year transfer student enrolled in the computer engineering major. For my team’s senior design project, we are using RF position tracking inside a grocery store in order to guide customers throughout the store. This idea was founded upon an earlier interest I had in Internet of Things devices that I wrote a research paper on in EECS 1. 
+
+Currently, we have a functioning database to store position and descriptive information of the products we are tracking, a mobile application for customers to use, and a few devices used for tracking that a distributor was willing to give us for free. With additional funding, we will able to purchase more of the devices we already have to perform more comprehensive tests, building to a fully functional product by the end of winter quarter.
 \item Chandler Ditolla
 	\begin{itemize}
 	\item Major: Computer Engineering
 	\item Role: System Software Engineer
 	\item Responsibilities: Develops firmware for the hardware modules
 	\end{itemize}
+Personal Statement:
+
+My name is Chandler Ditolla and I'm a 4th year computer engineering student. I am currently a part of a five man team working on our senior capstone project. Our project is a application of rf position tracking inside a grocery store to assist shoppers with finding items in a store. I am interested in this technology because positional tracking in general interests me and I thought this was a novel application doable in the time we have to complete our project. The experience I have in relation to this project is limited to my coding experience cultivated in many of my courses. We have currently accomplished the positional tracking aspect and are close to conducting tests with the user application. The funds received from this proposal will help with pcb design and the purchasing of chips needed for our current system. I believe we should receive funding because we are a hardworking and committed group, in fact our group has been working on our project since the start of summer (the code base) demonstrating our dedication to the project.
 \item Tanner Emerson
 	\begin{itemize}
 	\item Major: Computer Engineering
 	\item Role: System Software Engineer
 	\item Responsibilities: Develops software interface between the hardware module and the database and aids in the PCB design of the hardware module
 	\end{itemize}
+Personal Statement:
+
+My name is Tanner Emerson and I am working with a team of Computer/Electrical engineers to implement a real time indoor positioning system in order to help shoppers in a store navigate more efficiently to each item. This means that shoppers would no longer have to wander around aimlessly to find items, leaving more time to spend on the things they choose. This project will allow me to gain invaluable skills with software hardware interfacing. As I move into the workforce, this will be a strong asset, separating me from my peers. I believe that having this experience would have made me go into some of my classes with a better understanding of how to approach a real world problem. 
+
+So far, the team has created an application that allows a user to create a shopping list from items that exist in a specific store. Once they have created a list, we can plot the points on a map showing the user where the items they want are located. Next we will be working on creating our own custom hardware to replace the modules that were purchased from the manufacturer. This will allow us to reduce the price of our final product making it more feasible to implement this on a large scale. We are requesting funding in order to make it possible to make our fulfill our vision of cheaper hardware.
 \item Jason Wang
 	\begin{itemize}
 	\item Major: Electrical Engineering
 	\item Role: Hardware Engineer
 	\item Responsibilities: Works on PCB design, part selection, and 3D-printed housing for the hardware module
 	\end{itemize}
+Personal Statement:
+
+My name is Jason Wang. I am a fifth year transfer student pursing my undergraduate education in electrical engineering. My team's goal for the senior design project courses is to design and implement an indoor RF positioning system for a retail environment to guide shoppers to the location of desired products and help employees with inventory management. The hands-on experience I will gain from this project will bolster my understanding of the topics covered in my electronics, digital design, control systems, advanced C programming, electromagnetics, digital signal processing, and antenna design courses. 
+
+So far, my team has made a working Android application for shoppers to interface with the system and implemented a database to store position and product data. We also obtained a small number of RF transceiver development boards from Decawave and are exploring their capabilities. We are seeking funding so we can purchase more development boards to conduct further testing and purchase components to develop hardware more specific to our application.
 \end{itemize}
+
+\section{Budget}
+
+The following is the tentative list of parts going on the PCB:
+
+\FloatBarrier
+
+ \begin{table}[h!]
+ 	\centering
+ 	\caption{Parts List for PCB}
+ 	\label{tab:partslist}
+ 	\csvautotabular{partslist.csv}
+\end{table}
+
+\FloatBarrier
+
+PCB assembly and fabrication costs assume that two iterations are done.
+Each iteration has five boards manufactured.
+
+\FloatBarrier
+
+\begin{table}[h!]
+  	\centering
+  	\caption{Itemized Expenditures}
+  	\label{tab:costs}
+  	\csvautotabular{costs.csv}
+\end{table}
+
+\FloatBarrier
 
 \section{References}
 \begin{itemize}
-\item Decawave's DW1000 Datasheet V2.09
+\item Decawave's DW1000 Datasheet V2.09 - https://www.decawave.com/sites/default/files/resources/dw1000-datasheet-v2.09.pdf
+\item Antenna Pricing - https://www.digikey.com/product-detail/en/taiyo-yuden/AH086M555003-T/587-2204-1-ND/2002902 
+\item Battery Pricing - https://www.mouser.com/ProductDetail/TinyCircuits/ASR00036?qs=sGAEpiMZZMt9AXHBRDCfltZePquEfJYbBmgZK9wnboo\%3d
+\item DC-DC Converter Pricing - https://www.mouser.com/ProductDetail/TinyCircuits/ASR00036?qs=sGAEpiMZZMt9AXHBRDCfltZePquEfJYbBmgZK9wnboo\%3d
+\item DW1000 Pricing - https://www.semiconductorstore.com/cart/pc/viewPrd.asp?idproduct=50015
+\item Microcontroller Pricing - https://www.digikey.com/product-detail/en/microchip-technology/ATSAM4N16BA-MUR/1611-ATSAM4N16BA-MURCT-ND/6832601
+\item Battery Management IC Pricing - https://www.digikey.com/product-detail/en/texas-instruments/BQ25121AYFPT/296-49478-1-ND/9360696
+\item USB Connector Pricing - https://www.digikey.com/product-detail/en/molex-llc/1050170001/WM1399CT-ND/2350885
+\item PCB Fabrication Pricing (all default settings; $5$ boards with size $5$cm x $5$cm) - https://www.7pcb.com/pcb-quote-online.php?c5=5\&c1980=5\&e1980=5\&dimension=cm\&c9=0.062\&c11=2\&c13=1\&c15=Green\&c17=1\&c19=1\&country=US\&turnaround=1\&send=Calculate\&x=69\&y=14
+\item PCB Assembly Pricing (5 boards, 15 BOM lines, 3 BGA/QFN parts, all else 0) - https://www.7pcb.com/PCB-Assembly-Quote.php?d3=1\&d5=0\&c6=5\&c8=15\&c11=0\&c13=1\&c18=0\&c20=0\&c23=0\&c25=3\&send=Calculate\&x=117\&y=18
 \end{itemize}
 \end{document}

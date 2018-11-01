@@ -1,0 +1,13 @@
+Item , Unit Price , Quantity , Total
+Antenna , \$2.01 , 15 (5 for each PCB fabrication run; 5 for testing) , \$30.15
+Battery , \$6.37 , 10 (5 for each PCB run) , \$63.70
+DC-DC Converter , \$1.35 , 15 (5 for each PCB run; 5 for testing) , \$20.25
+Decawave DW1000 Chip , \$10.47 , 10 (5 for each PCB run) , \$104.70
+Decawave DWM1001 , \$23.55 , 2 (for tests) , \$50.85
+Microcontroller , \$2.34 , 15 (5 for each PCB run; 5 for testing) , \$35.10
+Battery Management IC , \$4.42 , 15 (5 for each PCB run; 5 for testing) , \$66.30
+USB Connector , \$0.97 , 15 (5 for each PCB run; 5 for testing) , \$14.55
+PCB Assembly , \$337.68 , 2 , \$675.36
+PCB Fabrication , \$164.97 , 2 , \$329.94
+PCB Fabrication Shipment , \$26.04 , 2 , \$52.08
+Total , , , \$1442.98

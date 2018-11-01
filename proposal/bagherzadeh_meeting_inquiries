@@ -1,0 +1,7 @@
+- Update on each person's individual progress
+- How to get access to lab test equipment
+- Get access to PCB layout SW and RF SW. I know Franco has ADS and AWR. Not sure if we can use it or how it integrates with or can be used for PCB layout.
+- IC socket
+- is there a google firebase for SQL servers?
+
+Need to confirm that you don't drive too much current through the connector and the charging hardware. It might damage the connector.
